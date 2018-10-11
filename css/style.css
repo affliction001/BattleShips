@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  line-height: 1.15;
+}
+
+body {
+  position: relative;
+}
+
+.start-page, .player-field, .enemy-field, .win-page, .loose-page {
+  border: 1px solid black;
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+}
+
+.start-page {
+  visibility: hidden;
+}
+
+.player-field {
+  visibility: hidden;
+}
+
+.enemy-field {
+
+}
+
+.win-page {
+  visibility: hidden;
+}
+
+.loose-page {
+  visibility: hidden;
+}
