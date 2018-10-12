@@ -21,11 +21,11 @@ body {
 }
 
 .player-field {
-  visibility: hidden;
+
 }
 
 .enemy-field {
-
+  visibility: hidden;
 }
 
 .win-page {

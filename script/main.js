@@ -267,20 +267,98 @@ function generateEnemyShips() {
   }
 
   createFourDeckShip('40');
+
   createThreeDeckShip('30');
   createThreeDeckShip('31');
+
   createTwoDeckShip('20');
   createTwoDeckShip('21');
   createTwoDeckShip('22');
+
   createOneDeckShip('10');
   createOneDeckShip('11');
   createOneDeckShip('12');
   createOneDeckShip('13');
 }
 
-generateEnemyShips();
+function generatePlayerShips() {
+  let flag_fourDeckShip = true;
+  let flag_threeDeckShip = false;
+  let flag_twoDeckShip = false;
+  let flag_oneDeckShip = false;
 
-let fieldStr = '';
+  if (flag_fourDeckShip) {
+    let X = 0;
+    let Y = 0;
+
+    let ship = [{x: X, y: Y, m: '40'}, {x: X+1, y: Y, m: '40'}, {x: X+2, y: Y, m: '40'}, {x: X+3, y: Y, m: '40'}];
+
+    ship.forEach(block => {
+      PLAYER_FIELD[block.y][block.x] = block.m;
+    });
+
+    drawPlayerFieldInConsole();
+
+    document.querySelector('body').addEventListener('keydown', event => {
+      if (event.keyCode === 39) {
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = 0; }); // Стираем старый корабль
+        X++; // Сдвигаем вправо
+        ship = [{x: X, y: Y, m: '40'}, {x: X+1, y: Y, m: '40'}, {x: X+2, y: Y, m: '40'}, {x: X+3, y: Y, m: '40'}]; // создаем новый корабль
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = block.m; }); // размещаем новый сдвинутый корабль на поле
+
+        console.clear();
+        drawPlayerFieldInConsole();
+      }
+
+      if (event.keyCode === 37) {
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = 0; }); // Стираем старый корабль
+        X--; // Сдвигаем влево
+        ship = [{x: X, y: Y, m: '40'}, {x: X+1, y: Y, m: '40'}, {x: X+2, y: Y, m: '40'}, {x: X+3, y: Y, m: '40'}]; // создаем новый корабль
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = block.m; }); // размещаем новый сдвинутый корабль на поле
+
+        console.clear();
+        drawPlayerFieldInConsole();
+      }
+
+      if (event.keyCode === 38) {
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = 0; }); // Стираем старый корабль
+        Y--; // Сдвигаем вверх
+        ship = [{x: X, y: Y, m: '40'}, {x: X+1, y: Y, m: '40'}, {x: X+2, y: Y, m: '40'}, {x: X+3, y: Y, m: '40'}]; // создаем новый корабль
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = block.m; }); // размещаем новый сдвинутый корабль на поле
+
+        console.clear();
+        drawPlayerFieldInConsole();
+      }
+
+      if (event.keyCode === 40) {
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = 0; }); // Стираем старый корабль
+        Y++; // Сдвигаем вниз
+        ship = [{x: X, y: Y, m: '40'}, {x: X+1, y: Y, m: '40'}, {x: X+2, y: Y, m: '40'}, {x: X+3, y: Y, m: '40'}]; // создаем новый корабль
+        ship.forEach(block => { PLAYER_FIELD[block.y][block.x] = block.m; }); // размещаем новый сдвинутый корабль на поле
+
+        console.clear();
+        drawPlayerFieldInConsole();
+      }
+    });
+  }
+}
+
+generateEnemyShips();
+generatePlayerShips();
+
+function drawPlayerFieldInConsole() {
+  let fieldStr = '';
+  PLAYER_FIELD.forEach(row => {
+    let rowStr = '\t';
+    row.forEach(cell => {
+      rowStr += cell + '\t';
+    });
+    fieldStr += rowStr + '\n\n';
+  });
+  console.log(fieldStr);
+}
+
+{/*let fieldStr = '';
 ENEMY_FIELD.forEach(row => {
   let rowStr = '\t';
   row.forEach(cell => {
@@ -288,4 +366,4 @@ ENEMY_FIELD.forEach(row => {
   });
   fieldStr += rowStr + '\n\n';
 });
-console.log(fieldStr);
+console.log(fieldStr);*/}
