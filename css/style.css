@@ -9,7 +9,7 @@ body {
   position: relative;
 }
 
-.start-page, .player-field, .enemy-field, .win-page, .loose-page {
+.start-page, .player-field, .player-field-mirror, .enemy-field, .win-page, .loose-page {
   border: 1px solid black;
   width: 100vw;
   height: 100vh;
@@ -22,6 +22,28 @@ body {
 
 .player-field {
 
+}
+
+.player-field-battlezone {
+  border: 1px solid black;
+  width: 100vw;
+  height: 100vw;
+  margin-top: calc((100vh - 100vw) / 2);
+}
+
+.row {
+  font-size: 0;
+}
+
+.row div {
+  border: 1px solid black;
+  display: inline-block;
+  width: 10%;
+  height: 10vw;
+}
+
+.player-field-mirror .row div {
+  opacity: 0.5;
 }
 
 .enemy-field {
