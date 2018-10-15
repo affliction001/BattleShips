@@ -24,6 +24,8 @@ const PLAYER_FIELD = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 ];
 
+const PLAYER_FIELD_MIRROR = [];
+
 // Проверяется пересечение корабля с другими кораблями на поле
 function isIntersectAnotherShip(ship, field) {
   /*
@@ -285,8 +287,6 @@ function generateEnemyShips() {
 
 // Генерируются корабли игрока
 function generatePlayerShips() {
-  const PLAYER_FIELD_MIRROR = [];
-
   PLAYER_FIELD.forEach(row => {
     let newRow = [];
     row.forEach(cell => {
@@ -455,8 +455,12 @@ function generatePlayerShips() {
     let ship = createFourDeckShip('40');
 
     placeOnPlayerFieldMirror(ship);
+
     drawPlayerFieldInConsole();
     drawPlayerFieldMirrorInConsole();
+
+    drawPlayerFieldInWindow();
+    drawPlayerFieldMirrorInWindow();
 
     document.querySelector('body').addEventListener('keydown', playerEventsForPlaceShips);
 
@@ -466,8 +470,12 @@ function generatePlayerShips() {
         console.clear();
         clearField(PLAYER_FIELD_MIRROR);
         placeOnPlayerFieldMirror(ship);
+
         drawPlayerFieldInConsole();
         drawPlayerFieldMirrorInConsole();
+
+        drawPlayerFieldInWindow();
+        drawPlayerFieldMirrorInWindow();
       }
 
       if (event.keyCode === 37) {
@@ -476,8 +484,12 @@ function generatePlayerShips() {
           console.clear();
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
+
           drawPlayerFieldInConsole();
           drawPlayerFieldMirrorInConsole();
+
+          drawPlayerFieldInWindow();
+          drawPlayerFieldMirrorInWindow();
         }
       }
 
@@ -487,8 +499,12 @@ function generatePlayerShips() {
           console.clear();
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
+
           drawPlayerFieldInConsole();
           drawPlayerFieldMirrorInConsole();
+
+          drawPlayerFieldInWindow();
+          drawPlayerFieldMirrorInWindow();
         }
       }
 
@@ -498,8 +514,12 @@ function generatePlayerShips() {
           console.clear();
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
+
           drawPlayerFieldInConsole();
           drawPlayerFieldMirrorInConsole();
+
+          drawPlayerFieldInWindow();
+          drawPlayerFieldMirrorInWindow();
         }
       }
 
@@ -509,8 +529,12 @@ function generatePlayerShips() {
           console.clear();
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
+
           drawPlayerFieldInConsole();
           drawPlayerFieldMirrorInConsole();
+
+          drawPlayerFieldInWindow();
+          drawPlayerFieldMirrorInWindow();
         }
       }
 
@@ -563,35 +587,38 @@ function generatePlayerShips() {
           }
 
           placeOnPlayerFieldMirror(ship);
+
           drawPlayerFieldInConsole();
           drawPlayerFieldMirrorInConsole();
+
+          drawPlayerFieldInWindow();
+          drawPlayerFieldMirrorInWindow();
         }
 
         if (flagForChooseShip === 14) {
-          document.querySelector('body').removeEventListener('keydown', playerEventsForPlaceShips);
+          document.querySelector('body').removeEventListener('keydown', playerEventsForPlaceShips)
           console.clear();
+
+          document.querySelector('.player-field-mirror').style.visibility = 'hidden';
+          document.querySelector('.player-field').style.visibility = 'inherit';
+          document.querySelector('.enemy-field').style.visibility = 'hidden';
+
           drawEnemyFieldInConsole();
           drawPlayerFieldInConsole();
+
+          drawPlayerFieldInWindow();
+          drawEnemyFieldInWindow();
+
+          setTimeout(() => {
+            document.querySelector('.player-field').style.visibility = 'hidden';
+            document.querySelector('.enemy-field').style.visibility = 'inherit';
+          }, 2000);
         }
       }
     }
   }
 
   placeShipsOnField();
-
-  // Отрисовывается поле-зеркало игрока в консоли
-  function drawPlayerFieldMirrorInConsole() {
-    let fieldStr = '';
-    PLAYER_FIELD_MIRROR.forEach(row => {
-      let rowStr = '\t';
-      row.forEach(cell => {
-        rowStr += cell + '\t';
-      });
-      fieldStr += rowStr + '\n\n';
-    });
-
-    console.log(fieldStr);
-  }
 }
 
 generateEnemyShips();
@@ -621,4 +648,59 @@ function drawEnemyFieldInConsole() {
   });
 
   console.log(fieldStr);
+}
+function drawPlayerFieldMirrorInConsole() {
+  let fieldStr = '';
+  PLAYER_FIELD_MIRROR.forEach(row => {
+    let rowStr = '\t';
+    row.forEach(cell => {
+      rowStr += cell + '\t';
+    });
+    fieldStr += rowStr + '\n\n';
+  });
+
+  console.log(fieldStr);
+}
+
+// Отрисовываются игровые поля в окне браузера
+function drawPlayerFieldInWindow() {
+  const prefix = 'player-';
+
+  for (let row = 0; row < PLAYER_FIELD.length; ++row) {
+    for (let cell = 0; cell < PLAYER_FIELD[0].length; ++cell) {
+      const id = prefix + row + cell;
+
+      PLAYER_FIELD[row][cell] === 0 ?
+        document.querySelector(`#${id}`).style = 'background-color: #fff' :
+        document.querySelector(`#${id}`).style = 'background-color: #777';
+    }
+  }
+}
+
+function drawPlayerFieldMirrorInWindow() {
+  const prefix = 'player-mirror-';
+
+  for (let row = 0; row < PLAYER_FIELD_MIRROR.length; ++row) {
+    for (let cell = 0; cell < PLAYER_FIELD_MIRROR[0].length; ++cell) {
+      const id = prefix + row + cell;
+
+      PLAYER_FIELD_MIRROR[row][cell] === 0 ?
+        document.querySelector(`#${id}`).style = 'background-color: #fff' :
+        document.querySelector(`#${id}`).style = 'background-color: #777';
+    }
+  }
+}
+
+function drawEnemyFieldInWindow() {
+  const prefix = 'enemy-';
+
+  for (let row = 0; row < ENEMY_FIELD.length; ++row) {
+    for (let cell = 0; cell < ENEMY_FIELD[0].length; ++cell) {
+      const id = prefix + row + cell;
+
+      ENEMY_FIELD[row][cell] === 0 ?
+        document.querySelector(`#${id}`).style = 'background-color: #fff' :
+        document.querySelector(`#${id}`).style = 'background-color: rgba(150, 150, 150, 0)';
+    }
+  }
 }

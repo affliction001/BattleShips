@@ -21,18 +21,19 @@ body {
 }
 
 .player-field {
-
+  z-index: 20;
 }
 
-.player-field-battlezone {
+.player-field-battlezone, .player-field-mirror-battlezone, .enemy-field-battlezone {
   border: 1px solid black;
   width: 100vw;
   height: 100vw;
   margin-top: calc((100vh - 100vw) / 2);
+  font-size: 0;
 }
 
 .row {
-  font-size: 0;
+
 }
 
 .row div {
@@ -42,12 +43,16 @@ body {
   height: 10vw;
 }
 
+.player-field-mirror {
+  z-index: 30;
+}
+
 .player-field-mirror .row div {
   opacity: 0.5;
 }
 
 .enemy-field {
-  visibility: hidden;
+  z-index: 10;
 }
 
 .win-page {
