@@ -654,3 +654,50 @@ function drawFieldInWindow(FIELD, PREFIX) {
     }
   }
 }
+
+/*
+  Основной игровой процесс
+*/
+
+function gaming() {
+  let enemy_life = 20;
+  let player_life = 20;
+
+  const player_field = document.querySelector('.player-field');
+  const enemy_field = document.querySelector('.enemy-field');
+
+  function playerStep() {
+    enemy_field.addEventListener('click', playerShot);
+
+    function playerShot(event) {
+      const shot_coordinate = event.target.id.slice(-2);
+
+      if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0)') {
+        event.target.style.backgroundColor = 'rgba(150, 150, 150, 1)';
+        --enemy_life;
+      } else if (event.target.style.backgroundColor === 'rgba(150, 150, 150)' ||
+                 event.target.style.backgroundColor === 'rgba(0, 0, 255, 0.7)') {
+        event.target.style = 'box-shadow: 0px 0px 30px 20px #f00 inset';
+
+        setTimeout(() => {
+          event.target.style = 'box-shadow: none';
+        }, 100);
+      } else {
+        event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.7)';
+      }
+
+      if (enemy_life <= 0) {
+        setTimeout(() => { alert('You win!!!'); }, 500);
+      }
+    }
+  }
+
+  function enemyStep() {
+
+  }
+
+  playerStep();
+  enemyStep();
+}
+
+gaming();
