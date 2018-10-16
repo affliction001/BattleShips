@@ -456,11 +456,11 @@ function generatePlayerShips() {
 
     placeOnPlayerFieldMirror(ship);
 
-    drawPlayerFieldInConsole();
-    drawPlayerFieldMirrorInConsole();
+    drawFieldInConsole(PLAYER_FIELD);
+    drawFieldInConsole(PLAYER_FIELD_MIRROR);
 
-    drawPlayerFieldInWindow();
-    drawPlayerFieldMirrorInWindow();
+    drawFieldInWindow(PLAYER_FIELD, 'player-');
+    drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
 
     document.querySelector('body').addEventListener('keydown', playerEventsForPlaceShips);
 
@@ -471,11 +471,11 @@ function generatePlayerShips() {
         clearField(PLAYER_FIELD_MIRROR);
         placeOnPlayerFieldMirror(ship);
 
-        drawPlayerFieldInConsole();
-        drawPlayerFieldMirrorInConsole();
+        drawFieldInConsole(PLAYER_FIELD);
+        drawFieldInConsole(PLAYER_FIELD_MIRROR);
 
-        drawPlayerFieldInWindow();
-        drawPlayerFieldMirrorInWindow();
+        drawFieldInWindow(PLAYER_FIELD, 'player-');
+        drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
       }
 
       if (event.keyCode === 37) {
@@ -485,11 +485,11 @@ function generatePlayerShips() {
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
 
-          drawPlayerFieldInConsole();
-          drawPlayerFieldMirrorInConsole();
+          drawFieldInConsole(PLAYER_FIELD);
+          drawFieldInConsole(PLAYER_FIELD_MIRROR);
 
-          drawPlayerFieldInWindow();
-          drawPlayerFieldMirrorInWindow();
+          drawFieldInWindow(PLAYER_FIELD, 'player-');
+          drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
         }
       }
 
@@ -500,11 +500,11 @@ function generatePlayerShips() {
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
 
-          drawPlayerFieldInConsole();
-          drawPlayerFieldMirrorInConsole();
+          drawFieldInConsole(PLAYER_FIELD);
+          drawFieldInConsole(PLAYER_FIELD_MIRROR);
 
-          drawPlayerFieldInWindow();
-          drawPlayerFieldMirrorInWindow();
+          drawFieldInWindow(PLAYER_FIELD, 'player-');
+          drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
         }
       }
 
@@ -515,11 +515,11 @@ function generatePlayerShips() {
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
 
-          drawPlayerFieldInConsole();
-          drawPlayerFieldMirrorInConsole();
+          drawFieldInConsole(PLAYER_FIELD);
+          drawFieldInConsole(PLAYER_FIELD_MIRROR);
 
-          drawPlayerFieldInWindow();
-          drawPlayerFieldMirrorInWindow();
+          drawFieldInWindow(PLAYER_FIELD, 'player-');
+          drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
         }
       }
 
@@ -530,11 +530,11 @@ function generatePlayerShips() {
           clearField(PLAYER_FIELD_MIRROR);
           placeOnPlayerFieldMirror(ship);
 
-          drawPlayerFieldInConsole();
-          drawPlayerFieldMirrorInConsole();
+          drawFieldInConsole(PLAYER_FIELD);
+          drawFieldInConsole(PLAYER_FIELD_MIRROR);
 
-          drawPlayerFieldInWindow();
-          drawPlayerFieldMirrorInWindow();
+          drawFieldInWindow(PLAYER_FIELD, 'player-');
+          drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
         }
       }
 
@@ -588,11 +588,11 @@ function generatePlayerShips() {
 
           placeOnPlayerFieldMirror(ship);
 
-          drawPlayerFieldInConsole();
-          drawPlayerFieldMirrorInConsole();
+          drawFieldInConsole(PLAYER_FIELD);
+          drawFieldInConsole(PLAYER_FIELD_MIRROR);
 
-          drawPlayerFieldInWindow();
-          drawPlayerFieldMirrorInWindow();
+          drawFieldInWindow(PLAYER_FIELD, 'player-');
+          drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
         }
 
         if (flagForChooseShip === 14) {
@@ -603,11 +603,11 @@ function generatePlayerShips() {
           document.querySelector('.player-field').style.visibility = 'inherit';
           document.querySelector('.enemy-field').style.visibility = 'hidden';
 
-          drawEnemyFieldInConsole();
-          drawPlayerFieldInConsole();
+          drawFieldInConsole(ENEMY_FIELD);
+          drawFieldInConsole(PLAYER_FIELD);
 
-          drawPlayerFieldInWindow();
-          drawEnemyFieldInWindow();
+          drawFieldInWindow(ENEMY_FIELD, 'enemy-');
+          drawFieldInWindow(PLAYER_FIELD, 'player-');
 
           setTimeout(() => {
             document.querySelector('.player-field').style.visibility = 'hidden';
@@ -624,34 +624,10 @@ function generatePlayerShips() {
 generateEnemyShips();
 generatePlayerShips();
 
-// Отрисовываются игровые поля в консоли
-function drawPlayerFieldInConsole() {
+// Отрисовывают игровые поля в консоли
+function drawFieldInConsole(FIELD) {
   let fieldStr = '';
-  PLAYER_FIELD.forEach(row => {
-    let rowStr = '\t';
-    row.forEach(cell => {
-      rowStr += cell + '\t';
-    });
-    fieldStr += rowStr + '\n\n';
-  });
-
-  console.log(fieldStr);
-}
-function drawEnemyFieldInConsole() {
-  let fieldStr = '';
-  ENEMY_FIELD.forEach(row => {
-    let rowStr = '\t';
-    row.forEach(cell => {
-      rowStr += cell + '\t';
-    });
-    fieldStr += rowStr + '\n\n';
-  });
-
-  console.log(fieldStr);
-}
-function drawPlayerFieldMirrorInConsole() {
-  let fieldStr = '';
-  PLAYER_FIELD_MIRROR.forEach(row => {
+  FIELD.forEach(row => {
     let rowStr = '\t';
     row.forEach(cell => {
       rowStr += cell + '\t';
@@ -663,44 +639,18 @@ function drawPlayerFieldMirrorInConsole() {
 }
 
 // Отрисовываются игровые поля в окне браузера
-function drawPlayerFieldInWindow() {
-  const prefix = 'player-';
+function drawFieldInWindow(FIELD, PREFIX) {
+  const prefix = PREFIX;
 
-  for (let row = 0; row < PLAYER_FIELD.length; ++row) {
-    for (let cell = 0; cell < PLAYER_FIELD[0].length; ++cell) {
+  for (let row = 0; row < FIELD.length; ++row) {
+    for (let cell = 0; cell < FIELD[0].length; ++cell) {
       const id = prefix + row + cell;
 
-      PLAYER_FIELD[row][cell] === 0 ?
+      FIELD[row][cell] === 0 ?
         document.querySelector(`#${id}`).style = 'background-color: #fff' :
-        document.querySelector(`#${id}`).style = 'background-color: #777';
-    }
-  }
-}
-
-function drawPlayerFieldMirrorInWindow() {
-  const prefix = 'player-mirror-';
-
-  for (let row = 0; row < PLAYER_FIELD_MIRROR.length; ++row) {
-    for (let cell = 0; cell < PLAYER_FIELD_MIRROR[0].length; ++cell) {
-      const id = prefix + row + cell;
-
-      PLAYER_FIELD_MIRROR[row][cell] === 0 ?
-        document.querySelector(`#${id}`).style = 'background-color: #fff' :
-        document.querySelector(`#${id}`).style = 'background-color: #777';
-    }
-  }
-}
-
-function drawEnemyFieldInWindow() {
-  const prefix = 'enemy-';
-
-  for (let row = 0; row < ENEMY_FIELD.length; ++row) {
-    for (let cell = 0; cell < ENEMY_FIELD[0].length; ++cell) {
-      const id = prefix + row + cell;
-
-      ENEMY_FIELD[row][cell] === 0 ?
-        document.querySelector(`#${id}`).style = 'background-color: #fff' :
-        document.querySelector(`#${id}`).style = 'background-color: rgba(150, 150, 150, 0)';
+        prefix === 'enemy-' ?
+          document.querySelector(`#${id}`).style = 'background-color: rgba(150, 150, 150, 0)' :
+          document.querySelector(`#${id}`).style = 'background-color: #777';
     }
   }
 }
