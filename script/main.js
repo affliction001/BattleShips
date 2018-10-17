@@ -670,18 +670,16 @@ function gaming() {
     enemy_field.addEventListener('click', playerShot);
 
     function playerShot(event) {
-      const shot_coordinate = event.target.id.slice(-2);
-
       if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0)') {
-        event.target.style.backgroundColor = 'rgba(150, 150, 150, 1)';
+        event.target.style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
         --enemy_life;
-      } else if (event.target.style.backgroundColor === 'rgba(150, 150, 150)' ||
+      } else if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0.99)' ||
                  event.target.style.backgroundColor === 'rgba(0, 0, 255, 0.7)') {
-        event.target.style = 'box-shadow: 0px 0px 30px 20px #f00 inset';
+        event.target.classList.add('miss');
 
         setTimeout(() => {
-          event.target.style = 'box-shadow: none';
-        }, 100);
+          event.target.classList.remove('miss');
+        }, 300);
       } else {
         event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.7)';
       }
@@ -693,7 +691,10 @@ function gaming() {
   }
 
   function enemyStep() {
+    const x = Math.floor(Math.random() * 10);
+    const y = Math.floor(Math.random() * 10);
 
+    
   }
 
   playerStep();

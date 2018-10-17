@@ -62,3 +62,7 @@ body {
 .loose-page {
   visibility: hidden;
 }
+
+.miss {
+  box-shadow: 0px 0px 40px 20px #f00 inset;
+}
