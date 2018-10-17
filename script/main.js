@@ -650,7 +650,7 @@ function drawFieldInWindow(FIELD, PREFIX) {
         document.querySelector(`#${id}`).style = 'background-color: #fff' :
         prefix === 'enemy-' ?
           document.querySelector(`#${id}`).style = 'background-color: rgba(150, 150, 150, 0)' :
-          document.querySelector(`#${id}`).style = 'background-color: #777';
+          document.querySelector(`#${id}`).style = 'background-color: rgba(150, 150, 150, 0.99)';
     }
   }
 }
@@ -666,6 +666,7 @@ function gaming() {
   const player_field = document.querySelector('.player-field');
   const enemy_field = document.querySelector('.enemy-field');
 
+  // Шаг игрока.
   function playerStep() {
     enemy_field.addEventListener('click', playerShot);
 
@@ -690,11 +691,48 @@ function gaming() {
     }
   }
 
+  // Шаг компьютера.
+  let probableTargets = [];
   function enemyStep() {
-    const x = Math.floor(Math.random() * 10);
-    const y = Math.floor(Math.random() * 10);
+    let x = 0;
+    let y = 0;
 
-    
+    if (probableTargets.length > 0) {
+      const magic_number = Math.floor(Math.random() * probableTargets.length);
+      x = probableTargets[magic_number].x;
+      y = probableTargets[magic_number].y;
+    } else {
+      x = Math.floor(Math.random() * 10);
+      y = Math.floor(Math.random() * 10);
+    }
+
+    const target_id = '#player-' + y + x;
+
+    if (player_field.querySelector(target_id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
+      player_life--;
+
+      // Массив ячеек где точно нет кораблей.
+      const diagonalCells = [
+        `player-${y-1}${x-1}`,
+        `player-${y-1}${x+1}`,
+        `player-${y+1}${x-1}`,
+        `player-${y+1}${x+1}`
+      ];
+      // Массив ячеек где возможно продолжение корабля.
+      const perpendicularCells = [
+        `player-${y}${x-1}`,
+        `player-${y-1}${x}`,
+        `player-${y}${x+1}`,
+        `player-${y+1}${x}`
+      ];
+
+
+    } else if (player_field.querySelector(target_id).style.backgroundColor === 'rgba(255, 0, 0, 0)' ||
+               player_field.querySelector(target_id).style.backgroundColor === 'rgba(255, 0, 0, 0.99)') {
+      enemyStep();
+    } else {
+      // Передаем ход игроку ...
+    }
   }
 
   playerStep();
