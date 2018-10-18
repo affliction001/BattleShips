@@ -791,20 +791,24 @@ function gaming() {
 
       // Проверяем убит корабль или только ранен
       function stillAlive() {
+        let isAlive = false;
+
         currentShip.forEach(block => {
           if (player_field.querySelector(block.id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
-            return true;
+            isAlive = true;
           }
         });
 
-        return false;
+        return isAlive;
       }
 
       if (stillAlive()) { // Если корабль ранен
         // Закрашиваем клетки расположенные по диагонали в синий
-        diagonalCellsID.forEach(cellID => {
-          player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
-        });
+        try {
+          diagonalCellsID.forEach(cellID => {
+            player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
+          });
+        } catch(exeption) {}
 
         // Проверяем клетки расположенные перпендикулярно.
         // Если цвет клеток белый или серый, то добавляем в массив возможных целей.
@@ -821,6 +825,12 @@ function gaming() {
         }, 2000);
       } else { // Если корабль убит
         // Закрашиваем поле вокруг корабля в синий цвет
+        try {
+          diagonalCellsID.forEach(cellID => {
+            player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
+          });
+        } catch(exeption) {}
+
         currentShip.forEach(block => {
           try{
             if (player_field.querySelector(`#player-${block.y-1}${block.x}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
