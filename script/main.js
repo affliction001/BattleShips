@@ -662,6 +662,7 @@ function drawFieldInWindow(FIELD, PREFIX) {
   Основной игровой процесс
 */
 
+// Функция вызывается в методе generatePlayerShips после того как игрок расставит все свои корабли!
 function gaming() {
   let enemy_life = 20;
   let player_life = 20;
@@ -729,58 +730,63 @@ function gaming() {
 
       // Массив ячеек где точно нет кораблей.
       const diagonalCellsID = [
-        `player-${y-1}${x-1}`,
-        `player-${y-1}${x+1}`,
-        `player-${y+1}${x-1}`,
-        `player-${y+1}${x+1}`
+        `#player-${y-1}${x-1}`,
+        `#player-${y-1}${x+1}`,
+        `#player-${y+1}${x-1}`,
+        `#player-${y+1}${x+1}`
       ];
       // Массив ячеек где возможно продолжение корабля.
       const perpendicularCells = [
-        {id: `player-${y}${x-1}`, x: x-1, y: y},
-        {id: `player-${y-1}${x}`, x: x, y: y-1},
-        {id: `player-${y}${x+1}`, x: x+1, y: y},
-        {id: `player-${y+1}${x}`, x: x, y: y+1}
+        {id: `#player-${y}${x-1}`, x: x-1, y: y},
+        {id: `#player-${y-1}${x}`, x: x, y: y-1},
+        {id: `#player-${y}${x+1}`, x: x+1, y: y},
+        {id: `#player-${y+1}${x}`, x: x, y: y+1}
       ];
 
       // Сначала находим корабль в который попали.
       const currentShip = [];
       const shipMarker = PLAYER_FIELD[y][x];
-      currentShip.push({id: `player-${y}${x}`, x: x, y: y});
-      if (PLAYER_FIELD[y-1][x] === shipMarker) {
-        currentShip.push({id: `player-${y-1}${x}`, x: x, y: y-1});
-        if (PLAYER_FIELD[y-2][x] === shipMarker) {
-          currentShip.push({id: `player-${y-2}${x}`, x: x, y: y-2});
-          if (PLAYER_FIELD[y-3][x] === shipMarker) {
-            currentShip.push({id: `player-${y-3}${x}`, x: x, y: y-3});
+      currentShip.push({id: `#player-${y}${x}`, x: x, y: y});
+      try {
+        if (PLAYER_FIELD[y-1][x] === shipMarker) {
+          currentShip.push({id: `#player-${y-1}${x}`, x: x, y: y-1});
+          if (PLAYER_FIELD[y-2][x] === shipMarker) {
+            currentShip.push({id: `#player-${y-2}${x}`, x: x, y: y-2});
+            if (PLAYER_FIELD[y-3][x] === shipMarker) {
+              currentShip.push({id: `#player-${y-3}${x}`, x: x, y: y-3});
+            }
           }
         }
-      }
-      if (PLAYER_FIELD[y+1][x] === shipMarker) {
-        currentShip.push({id: `player-${y+1}${x}`, x: x, y: y+1});
-        if (PLAYER_FIELD[y+2][x] === shipMarker) {
-          currentShip.push({id: `player-${y+2}${x}`, x: x, y: y+2});
-          if (PLAYER_FIELD[y+3][x] === shipMarker) {
-            currentShip.push({id: `player-${y+3}${x}`, x: x, y: y+3});
+        if (PLAYER_FIELD[y+1][x] === shipMarker) {
+          currentShip.push({id: `#player-${y+1}${x}`, x: x, y: y+1});
+          if (PLAYER_FIELD[y+2][x] === shipMarker) {
+            currentShip.push({id: `#player-${y+2}${x}`, x: x, y: y+2});
+            if (PLAYER_FIELD[y+3][x] === shipMarker) {
+              currentShip.push({id: `#player-${y+3}${x}`, x: x, y: y+3});
+            }
           }
         }
-      }
-      if (PLAYER_FIELD[y][x-1] === shipMarker) {
-        currentShip.push({id: `player-${y}${x-1}`, x: x-1, y: y});
-        if (PLAYER_FIELD[y][x-2] === shipMarker) {
-          currentShip.push({id: `player-${y}${x-2}`, x: x-2, y: y});
-          if (PLAYER_FIELD[y][x-3] === shipMarker) {
-            currentShip.push({id: `player-${y}${x-3}`, x: x-3, y: y});
+        if (PLAYER_FIELD[y][x-1] === shipMarker) {
+          currentShip.push({id: `#player-${y}${x-1}`, x: x-1, y: y});
+          if (PLAYER_FIELD[y][x-2] === shipMarker) {
+            currentShip.push({id: `#player-${y}${x-2}`, x: x-2, y: y});
+            if (PLAYER_FIELD[y][x-3] === shipMarker) {
+              currentShip.push({id: `#player-${y}${x-3}`, x: x-3, y: y});
+            }
           }
         }
-      }
-      if (PLAYER_FIELD[y][x+1] === shipMarker) {
-        currentShip.push({id: `player-${y}${x+1}`, x: x+1, y: y});
-        if (PLAYER_FIELD[y][x+2] === shipMarker) {
-          currentShip.push({id: `player-${y}${x+2}`, x: x+2, y: y});
-          if (PLAYER_FIELD[y][x+3] === shipMarker) {
-            currentShip.push({id: `player-${y}${x+3}`, x: x+3, y: y});
+        if (PLAYER_FIELD[y][x+1] === shipMarker) {
+          currentShip.push({id: `#player-${y}${x+1}`, x: x+1, y: y});
+          if (PLAYER_FIELD[y][x+2] === shipMarker) {
+            currentShip.push({id: `#player-${y}${x+2}`, x: x+2, y: y});
+            if (PLAYER_FIELD[y][x+3] === shipMarker) {
+              currentShip.push({id: `#player-${y}${x+3}`, x: x+3, y: y});
+            }
           }
         }
+      } catch(exeption) {
+        // Проверка на выход за границы поля.
+        // НИчего не делаем.
       }
 
       // Проверяем убит корабль или только ранен
@@ -795,9 +801,9 @@ function gaming() {
       }
 
       if (stillAlive()) { // Если корабль ранен
-        // Закрашиваем клетки расположенные по диагонали в прозрачный красный цвет
+        // Закрашиваем клетки расположенные по диагонали в синий
         diagonalCellsID.forEach(cellID => {
-          player_field.querySelector(cellID).style.backgroundColor = 'rgba(255, 0, 0, 0)';
+          player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
         });
 
         // Проверяем клетки расположенные перпендикулярно.
@@ -812,22 +818,33 @@ function gaming() {
         // Повторяем ход
         setTimeout(() => {
           enemyStep();
-        }, 1000);
+        }, 2000);
       } else { // Если корабль убит
-        // Закрашиваем поле вокруг корабля в прозрачный красный цвет
+        // Закрашиваем поле вокруг корабля в синий цвет
         currentShip.forEach(block => {
-          if (player_field.querySelector(`player-${block.y-1}${block.x}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
-            player_field.querySelector(`player-${block.y-1}${block.x}`).style.backgroundColor = 'rgba(255, 0, 0, 0)';
-          }
-          if (player_field.querySelector(`player-${block.y}${block.x+1}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
-            player_field.querySelector(`player-${block.y}${block.x+1}`).style.backgroundColor = 'rgba(255, 0, 0, 0)';
-          }
-          if (player_field.querySelector(`player-${block.y+1}${block.x}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
-            player_field.querySelector(`player-${block.y+1}${block.x}`).style.backgroundColor = 'rgba(255, 0, 0, 0)';
-          }
-          if (player_field.querySelector(`player-${block.y}${block.x-1}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
-            player_field.querySelector(`player-${block.y}${block.x-1}`).style.backgroundColor = 'rgba(255, 0, 0, 0)';
-          }
+          try{
+            if (player_field.querySelector(`#player-${block.y-1}${block.x}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
+              player_field.querySelector(`#player-${block.y-1}${block.x}`).style.backgroundColor = 'rgb(0, 0, 255)';
+            }
+          } catch(exeption) {}
+
+          try{
+            if (player_field.querySelector(`#player-${block.y}${block.x+1}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
+              player_field.querySelector(`#player-${block.y}${block.x+1}`).style.backgroundColor = 'rgb(0, 0, 255)';
+            }
+          } catch(exeption) {}
+
+          try{
+            if (player_field.querySelector(`#player-${block.y+1}${block.x}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
+              player_field.querySelector(`#player-${block.y+1}${block.x}`).style.backgroundColor = 'rgb(0, 0, 255)';
+            }
+          } catch(exeption) {}
+
+          try{
+            if (player_field.querySelector(`#player-${block.y}${block.x-1}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
+              player_field.querySelector(`#player-${block.y}${block.x-1}`).style.backgroundColor = 'rgb(0, 0, 255)';
+            }
+          } catch(exeption) {}
         });
 
         // Зачищаем массив возможных целей
@@ -839,26 +856,24 @@ function gaming() {
         } else {
           setTimeout(() => {
             enemyStep();
-          }, 1000);
+          }, 2000);
         }
       }
-    } else if (player_field.querySelector(target_id).style.backgroundColor === 'rgba(255, 0, 0, 0)' ||
+    } else if (player_field.querySelector(target_id).style.backgroundColor === 'rgb(0, 0, 255)' ||
                player_field.querySelector(target_id).style.backgroundColor === 'rgba(255, 0, 0, 0.99)') {
       // Сюда уже стреляли
       enemyStep();
     } else {
       // Отмечаем клетку
-      player_field.querySelector(target_id).style.backgroundColor = 'rgba(255, 0, 0, 0)';
+      player_field.querySelector(target_id).style.backgroundColor = 'rgb(0, 0, 255)';
 
       // Передаем ход игроку ...
       setTimeout(() => {
         playerStep();
-      }, 1000);
+      }, 2000);
     }
   }
 
   // Начинаем игру с хода игрока.
   playerStep();
 }
-
-// gaming();
