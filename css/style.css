@@ -66,3 +66,13 @@ body {
 .miss {
   box-shadow: 0px 0px 40px 20px #f00 inset;
 }
+
+@keyframes shadow {
+	from {box-shadow: 0 0 10px 15px red inset;}
+	50% {box-shadow: 0 0 15px 20px red inset;}
+	to {box-shadow: 0 0 20px 25px red inset;}
+}
+
+.targeting {
+	animation: shadow 500ms infinite linear;
+}
