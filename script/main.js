@@ -679,17 +679,18 @@ function gaming() {
     enemy_field.addEventListener('click', playerShot);
 
     function playerShot(event) {
+      // Если попал
       if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0)') {
         event.target.style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
         --enemy_life;
-      } else if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0.99)' ||
-                 event.target.style.backgroundColor === 'rgba(0, 0, 255, 0.7)') {
-        event.target.classList.add('miss');
+      }
+      // Если уже стрелял по этой ячейке
+      if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0.99)' ||
+          event.target.style.backgroundColor === 'rgba(0, 0, 255, 0.7)') {
 
-        setTimeout(() => {
-          event.target.classList.remove('miss');
-        }, 300);
-      } else {
+      }
+      // Если промахнулся
+      if (event.target.style.backgroundColor === 'rgb(255, 255, 255)') {
         event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.7)';
 
         setTimeout(() => {
@@ -713,6 +714,8 @@ function gaming() {
     let x = 0;
     let y = 0;
 
+    // Если вероятные цели есть используем одну из доступных,
+    // Иначе генерируем случайные координаты
     if (probableTargets.length > 0) {
       const magic_number = Math.floor(Math.random() * probableTargets.length);
       x = probableTargets[magic_number].x;
@@ -721,10 +724,11 @@ function gaming() {
       x = Math.floor(Math.random() * 10);
       y = Math.floor(Math.random() * 10);
     }
-
     const target_id = '#player-' + y + x;
 
+    // Если есть попадание.
     if (player_field.querySelector(target_id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
+      // Уменьщаем жизнь игрока на единицу и закрашиваем клетку в красный цвет.
       player_life--;
       player_field.querySelector(target_id).style.backgroundColor = 'rgba(255, 0, 0, 0.99)';
 
@@ -757,6 +761,8 @@ function gaming() {
             }
           }
         }
+      } catch(exeption) {}
+      try {
         if (PLAYER_FIELD[y+1][x] === shipMarker) {
           currentShip.push({id: `#player-${y+1}${x}`, x: x, y: y+1});
           if (PLAYER_FIELD[y+2][x] === shipMarker) {
@@ -766,6 +772,8 @@ function gaming() {
             }
           }
         }
+      } catch(exeption) {}
+      try {
         if (PLAYER_FIELD[y][x-1] === shipMarker) {
           currentShip.push({id: `#player-${y}${x-1}`, x: x-1, y: y});
           if (PLAYER_FIELD[y][x-2] === shipMarker) {
@@ -775,6 +783,8 @@ function gaming() {
             }
           }
         }
+      } catch(exeption) {}
+      try {
         if (PLAYER_FIELD[y][x+1] === shipMarker) {
           currentShip.push({id: `#player-${y}${x+1}`, x: x+1, y: y});
           if (PLAYER_FIELD[y][x+2] === shipMarker) {
@@ -784,10 +794,14 @@ function gaming() {
             }
           }
         }
-      } catch(exeption) {
-        // Проверка на выход за границы поля.
-        // НИчего не делаем.
-      }
+      } catch(exeption) {}
+
+      // Закрашиваем клетки расположенные по диагонали в синий
+      diagonalCellsID.forEach(cellID => {
+        try{
+          player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
+        } catch(exeption) {}
+      });
 
       // Проверяем убит корабль или только ранен
       function stillAlive() {
@@ -803,20 +817,15 @@ function gaming() {
       }
 
       if (stillAlive()) { // Если корабль ранен
-        // Закрашиваем клетки расположенные по диагонали в синий
-        try {
-          diagonalCellsID.forEach(cellID => {
-            player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
-          });
-        } catch(exeption) {}
-
         // Проверяем клетки расположенные перпендикулярно.
         // Если цвет клеток белый или серый, то добавляем в массив возможных целей.
         perpendicularCells.forEach(cell => {
-          if (player_field.querySelector(cell.id).style.backgroundColor === 'rgb(255, 255, 255)' ||
-              player_field.querySelector(cell.id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
-            probableTargets.push({x: cell.x, y: cell.y});
-          }
+          try {
+            if (player_field.querySelector(cell.id).style.backgroundColor === 'rgb(255, 255, 255)' ||
+                player_field.querySelector(cell.id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
+              probableTargets.push({x: cell.x, y: cell.y});
+            }
+          } catch(exeption) {}
         });
 
         // Повторяем ход
@@ -825,12 +834,6 @@ function gaming() {
         }, 2000);
       } else { // Если корабль убит
         // Закрашиваем поле вокруг корабля в синий цвет
-        try {
-          diagonalCellsID.forEach(cellID => {
-            player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
-          });
-        } catch(exeption) {}
-
         currentShip.forEach(block => {
           try{
             if (player_field.querySelector(`#player-${block.y-1}${block.x}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
