@@ -734,13 +734,14 @@ function gaming() {
     }
     const target_id = '#player-' + y + x;
 
-    player_field.querySelector(target_id).classList.add('targeting');
+    // Если есть попадание.
+    if (player_field.querySelector(target_id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
+      // Фокусируемся на цели
+      player_field.querySelector(target_id).classList.add('targeting');
 
-    setTimeout(function() {
-      player_field.querySelector(target_id).classList.remove('targeting');
+      setTimeout(function() {
+        player_field.querySelector(target_id).classList.remove('targeting');
 
-      // Если есть попадание.
-      if (player_field.querySelector(target_id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
         // Уменьщаем жизнь игрока на единицу и закрашиваем клетку в красный цвет.
         player_life--;
         player_field.querySelector(target_id).style.backgroundColor = 'rgba(255, 0, 0, 0.99)';
@@ -885,11 +886,17 @@ function gaming() {
             }, 2000);
           }
         }
-      } else if (player_field.querySelector(target_id).style.backgroundColor === 'rgb(0, 0, 255)' ||
-                 player_field.querySelector(target_id).style.backgroundColor === 'rgba(255, 0, 0, 0.99)') {
-        // Сюда уже стреляли
-        enemyStep();
-      } else {
+      }, 1000);
+    } else if (player_field.querySelector(target_id).style.backgroundColor === 'rgb(0, 0, 255)' ||
+               player_field.querySelector(target_id).style.backgroundColor === 'rgba(255, 0, 0, 0.99)') {
+      // Сюда уже стреляли
+      enemyStep();
+    } else {
+      // Фокусируемся на цели
+      player_field.querySelector(target_id).classList.add('targeting');
+
+      setTimeout(function() {
+        player_field.querySelector(target_id).classList.remove('targeting');
         // Отмечаем клетку
         player_field.querySelector(target_id).style.backgroundColor = 'rgb(0, 0, 255)';
 
@@ -897,8 +904,8 @@ function gaming() {
         setTimeout(() => {
           playerStep();
         }, 2000);
-      }
-    }, 2000);
+      }, 1000);
+    }
   }
 
   // Начинаем игру с хода игрока.
