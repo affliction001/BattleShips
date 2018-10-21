@@ -76,3 +76,18 @@ body {
 .targeting {
 	animation: shadow 500ms infinite linear;
 }
+
+.msg {
+  position: absolute;
+  width: 30vw;
+	height: 10vw;
+	/* margin: calc(50vh - 5vw) auto; */
+  top: 10px;
+  left: 35vw;
+	text-align: center;
+	font-weight: bold;
+	font-family: monospace;
+	color: #f00;
+  z-index: 50;
+  visibility: hidden;
+}

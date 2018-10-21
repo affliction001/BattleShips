@@ -685,6 +685,8 @@ function gaming() {
         event.target.style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
         --enemy_life;
 
+        massage(2, 'Injured');
+
         playerStep();
       }
       // Если уже стрелял по этой ячейке
@@ -700,6 +702,8 @@ function gaming() {
       // Если промахнулся
       if (event.target.style.backgroundColor === 'rgb(255, 255, 255)') {
         event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.7)';
+
+        massage(1, 'Miss');
 
         setTimeout(() => {
           enemyStep();
@@ -910,4 +914,35 @@ function gaming() {
 
   // Начинаем игру с хода игрока.
   playerStep();
+}
+
+// Функция выводит ссобщение о промахе, ранении либо убийстве.
+// Принимает в качестве аргументов статус и текст. Текст выводится клиенту.
+// status: 1 - miss; 2 - injured; 3 - killed;
+function massage(status, text) {
+  let box = {/* DOM node */};
+
+  if (status === 1) {
+    box = document.getElementById('msg-miss');
+  }
+  if (status === 2) {
+    box = document.getElementById('msg-injured');
+  }
+  if (status === 3) {
+    box = document.getElementById('msg-killed');
+  }
+
+  box.textContent = text;
+
+  box.style = `font-size: ${box.clientHeight}px; visibility: visible;`;
+
+  let count = 1;
+  let timer = setInterval(function() {
+  	if (count <= 0) {
+  		clearInterval(timer);
+  	} else {
+  		box.style = `font-size: ${box.clientHeight}px; opacity: ${count}; visibility: visible;`;
+  	}
+  	count = count - 0.1;
+  }, 100);
 }
