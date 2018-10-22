@@ -7,6 +7,7 @@
 
 body {
   position: relative;
+  background-color: rgb(60, 60, 250);
 }
 
 .start-page, .player-field, .player-field-mirror, .enemy-field, .win-page, .loose-page {
@@ -89,4 +90,44 @@ body {
 	color: #f00;
   z-index: 50;
   visibility: hidden;
+}
+
+.move-ships {
+  border: none;
+  position: absolute;
+  width: 100px;
+  height: 100px;
+  top: calc(100vh - 120px);
+  background-color: #fff;
+  opacity: 0.7;
+}
+
+#moveLeft {
+  left: 5vw;
+  background: url('../src/img/moveLeft.png') no-repeat center center / cover;
+}
+
+#moveUp {
+  left: 20vw;
+  background: url('../src/img/moveUp.png') no-repeat center center / cover;
+}
+
+#moveDown {
+  left: 35vw;
+  background: url('../src/img/moveDown.png') no-repeat center center / cover;
+}
+
+#moveRight {
+  left: 50vw;
+  background: url('../src/img/moveRight.png') no-repeat center center / cover;
+}
+
+#rotate {
+  right: 20vw;
+  background: url('../src/img/rotate.png') no-repeat center center / cover;
+}
+
+#setShip {
+  right: 5vw;
+  background: url('../src/img/setShip.png') no-repeat center center / cover;
 }
