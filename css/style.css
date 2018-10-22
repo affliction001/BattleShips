@@ -81,8 +81,7 @@ body {
   position: absolute;
   width: 30vw;
 	height: 10vw;
-	/* margin: calc(50vh - 5vw) auto; */
-  top: 10px;
+  top: calc(50vh - 5vw);
   left: 35vw;
 	text-align: center;
 	font-weight: bold;

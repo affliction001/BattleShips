@@ -670,6 +670,89 @@ function gaming() {
   const player_field = document.querySelector('.player-field');
   const enemy_field = document.querySelector('.enemy-field');
 
+  // Функция находит текущую цель, по которой производится атака.
+  // В качестве аргументов принимает Поле в котором следует искать, префикс id, координату x, координату y.
+  // Возвращает массив с координатами и id текущего корабля.
+  function findTargetShip(FIELD, prefix, X, Y) {
+    // Сначала находим корабль в который попали.
+    const currentShip = [];
+    const shipMarker = FIELD[Y][X];
+    currentShip.push({id: `#${prefix}${Y}${X}`, x: X, y: Y});
+
+    try {
+      if (FIELD[Y-1][X] === shipMarker) {
+        currentShip.push({id: `#${prefix}${Y-1}${X}`, x: X, y: Y-1});
+        if (FIELD[Y-2][X] === shipMarker) {
+          currentShip.push({id: `#${prefix}${Y-2}${X}`, x: X, y: Y-2});
+          if (FIELD[Y-3][X] === shipMarker) {
+            currentShip.push({id: `#${prefix}${Y-3}${X}`, x: X, y: Y-3});
+          }
+        }
+      }
+    } catch(exeption) {}
+    try {
+      if (FIELD[Y+1][X] === shipMarker) {
+        currentShip.push({id: `#${prefix}${Y+1}${X}`, x: X, y: Y+1});
+        if (FIELD[Y+2][X] === shipMarker) {
+          currentShip.push({id: `#${prefix}${Y+2}${X}`, x: X, y: Y+2});
+          if (FIELD[Y+3][X] === shipMarker) {
+            currentShip.push({id: `#${prefix}${Y+3}${X}`, x: X, y: Y+3});
+          }
+        }
+      }
+    } catch(exeption) {}
+    try {
+      if (FIELD[Y][X-1] === shipMarker) {
+        currentShip.push({id: `#${prefix}${Y}${X-1}`, x: X-1, y: Y});
+        if (FIELD[Y][X-2] === shipMarker) {
+          currentShip.push({id: `#${prefix}${Y}${X-2}`, x: X-2, y: Y});
+          if (FIELD[Y][X-3] === shipMarker) {
+            currentShip.push({id: `#${prefix}${Y}${X-3}`, x: X-3, y: Y});
+          }
+        }
+      }
+    } catch(exeption) {}
+    try {
+      if (FIELD[Y][X+1] === shipMarker) {
+        currentShip.push({id: `#${prefix}${Y}${X+1}`, x: X+1, y: Y});
+        if (FIELD[Y][X+2] === shipMarker) {
+          currentShip.push({id: `#${prefix}${Y}${X+2}`, x: X+2, y: Y});
+          if (FIELD[Y][X+3] === shipMarker) {
+            currentShip.push({id: `#${prefix}${Y}${X+3}`, x: X+3, y: Y});
+          }
+        }
+      }
+    } catch(exeption) {}
+
+    return currentShip;
+  }
+
+  // Функция проверяет ранен корабль по которому попали либо убит.
+  // В качестве аргумента принимает массив, состоящий из координат и id текущего корабля, по котормоу произведен выстрел.
+  // а также строку по какому полю производится атака: 'player' или 'enemy'.
+  // Возвращает true если корабль ранен, false если корабль убит.
+  function isShipAlive(targetShip, targetField) {
+    let isAlive = false;
+
+    if (targetField === 'player') {
+      targetShip.forEach(block => {
+        if (player_field.querySelector(block.id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
+          isAlive = true;
+        }
+      });
+    }
+
+    if (targetField === 'enemy') {
+      targetShip.forEach(block => {
+        if (enemy_field.querySelector(block.id).style.backgroundColor === 'rgba(150, 150, 150, 0)') {
+          isAlive = true;
+        }
+      });
+    }
+
+    return isAlive;
+  }
+
   // Шаг игрока.
   function playerStep() {
     // Шаг игрока, значит скрываем поле игрока и отбражаем поле компьютера
@@ -689,78 +772,61 @@ function gaming() {
         event.target.style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
         --enemy_life;
 
-        // Сначала находим корабль в который попали.
-        const currentShip = [];
-        const shipMarker = ENEMY_FIELD[y][x];
-        currentShip.push({id: `#enemy-${y}${x}`, x: x, y: y});
+        // Массив ячеек где точно нет кораблей.
+        const diagonalCellsID = [
+          `#enemy-${y-1}${x-1}`,
+          `#enemy-${y-1}${x+1}`,
+          `#enemy-${y+1}${x-1}`,
+          `#enemy-${y+1}${x+1}`
+        ];
 
-        console.log(currentShip);
+        // Закрашиваем клетки расположенные по диагонали в синий
+        diagonalCellsID.forEach(cellID => {
+          try{
+            enemy_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
+          } catch(exeption) {}
+        });
 
-        try {
-          if (ENEMY_FIELD[y-1][x] === shipMarker) {
-            currentShip.push({id: `#enemy-${y-1}${x}`, x: x, y: y-1});
-            if (ENEMY_FIELD[y-2][x] === shipMarker) {
-              currentShip.push({id: `#enemy-${y-2}${x}`, x: x, y: y-2});
-              if (ENEMY_FIELD[y-3][x] === shipMarker) {
-                currentShip.push({id: `#enemy-${y-3}${x}`, x: x, y: y-3});
-              }
-            }
-          }
-        } catch(exeption) {}
-        try {
-          if (ENEMY_FIELD[y+1][x] === shipMarker) {
-            currentShip.push({id: `#enemy-${y+1}${x}`, x: x, y: y+1});
-            if (ENEMY_FIELD[y+2][x] === shipMarker) {
-              currentShip.push({id: `#enemy-${y+2}${x}`, x: x, y: y+2});
-              if (ENEMY_FIELD[y+3][x] === shipMarker) {
-                currentShip.push({id: `#enemy-${y+3}${x}`, x: x, y: y+3});
-              }
-            }
-          }
-        } catch(exeption) {}
-        try {
-          if (ENEMY_FIELD[y][x-1] === shipMarker) {
-            currentShip.push({id: `#enemy-${y}${x-1}`, x: x-1, y: y});
-            if (ENEMY_FIELD[y][x-2] === shipMarker) {
-              currentShip.push({id: `#enemy-${y}${x-2}`, x: x-2, y: y});
-              if (ENEMY_FIELD[y][x-3] === shipMarker) {
-                currentShip.push({id: `#enemy-${y}${x-3}`, x: x-3, y: y});
-              }
-            }
-          }
-        } catch(exeption) {}
-        try {
-          if (ENEMY_FIELD[y][x+1] === shipMarker) {
-            currentShip.push({id: `#enemy-${y}${x+1}`, x: x+1, y: y});
-            if (ENEMY_FIELD[y][x+2] === shipMarker) {
-              currentShip.push({id: `#enemy-${y}${x+2}`, x: x+2, y: y});
-              if (ENEMY_FIELD[y][x+3] === shipMarker) {
-                currentShip.push({id: `#enemy-${y}${x+3}`, x: x+3, y: y});
-              }
-            }
-          }
-        } catch(exeption) {}
+        const target = findTargetShip(ENEMY_FIELD, 'enemy-', x, y);
 
-        // Проверяем убит корабль или только ранен
-        function isStillAliveEnemyShip() {
-          let isAlive = false;
+        if (isShipAlive(target, 'enemy')) {
+          massage(2, 'Injured');
+        } else {
+          massage(3, 'Killed');
 
-          currentShip.forEach(block => {
-            if (enemy_field.querySelector(block.id).style.backgroundColor === 'rgba(150, 150, 150, 0)') {
-              isAlive = true;
-            }
+          // Закрашиваем поле вокруг корабля в синий цвет.
+          target.forEach(block => {
+            try{
+              if (enemy_field.querySelector(`#enemy-${block.y-1}${block.x}`).style.backgroundColor !== 'rgba(150, 150, 150, 0.99)') {
+                enemy_field.querySelector(`#enemy-${block.y-1}${block.x}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+              }
+            } catch(exeption) {}
+
+            try{
+              if (enemy_field.querySelector(`#enemy-${block.y}${block.x+1}`).style.backgroundColor !== 'rgba(150, 150, 150, 0.99)') {
+                enemy_field.querySelector(`#enemy-${block.y}${block.x+1}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+              }
+            } catch(exeption) {}
+
+            try{
+              if (enemy_field.querySelector(`#enemy-${block.y+1}${block.x}`).style.backgroundColor !== 'rgba(150, 150, 150, 0.99)') {
+                enemy_field.querySelector(`#enemy-${block.y+1}${block.x}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+              }
+            } catch(exeption) {}
+
+            try{
+              if (enemy_field.querySelector(`#enemy-${block.y}${block.x-1}`).style.backgroundColor !== 'rgba(150, 150, 150, 0.99)') {
+                enemy_field.querySelector(`#enemy-${block.y}${block.x-1}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+              }
+            } catch(exeption) {}
           });
-
-          return isAlive;
         }
-        
-        isStillAliveEnemyShip() ? massage(2, 'Injured') : massage(3, 'Killed');
 
         playerStep();
       }
       // Если уже стрелял по этой ячейке
       if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0.99)' ||
-          event.target.style.backgroundColor === 'rgba(0, 0, 255, 0.7)') {
+          event.target.style.backgroundColor === 'rgba(0, 0, 255, 0.99)') {
         event.target.classList.add('miss');
         setTimeout(function() {
           event.target.classList.remove('miss');
@@ -770,7 +836,7 @@ function gaming() {
       }
       // Если промахнулся
       if (event.target.style.backgroundColor === 'rgb(255, 255, 255)') {
-        event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.7)';
+        event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
 
         massage(1, 'Miss');
 
@@ -834,55 +900,6 @@ function gaming() {
           {id: `#player-${y+1}${x}`, x: x, y: y+1}
         ];
 
-        // Сначала находим корабль в который попали.
-        const currentShip = [];
-        const shipMarker = PLAYER_FIELD[y][x];
-        currentShip.push({id: `#player-${y}${x}`, x: x, y: y});
-        try {
-          if (PLAYER_FIELD[y-1][x] === shipMarker) {
-            currentShip.push({id: `#player-${y-1}${x}`, x: x, y: y-1});
-            if (PLAYER_FIELD[y-2][x] === shipMarker) {
-              currentShip.push({id: `#player-${y-2}${x}`, x: x, y: y-2});
-              if (PLAYER_FIELD[y-3][x] === shipMarker) {
-                currentShip.push({id: `#player-${y-3}${x}`, x: x, y: y-3});
-              }
-            }
-          }
-        } catch(exeption) {}
-        try {
-          if (PLAYER_FIELD[y+1][x] === shipMarker) {
-            currentShip.push({id: `#player-${y+1}${x}`, x: x, y: y+1});
-            if (PLAYER_FIELD[y+2][x] === shipMarker) {
-              currentShip.push({id: `#player-${y+2}${x}`, x: x, y: y+2});
-              if (PLAYER_FIELD[y+3][x] === shipMarker) {
-                currentShip.push({id: `#player-${y+3}${x}`, x: x, y: y+3});
-              }
-            }
-          }
-        } catch(exeption) {}
-        try {
-          if (PLAYER_FIELD[y][x-1] === shipMarker) {
-            currentShip.push({id: `#player-${y}${x-1}`, x: x-1, y: y});
-            if (PLAYER_FIELD[y][x-2] === shipMarker) {
-              currentShip.push({id: `#player-${y}${x-2}`, x: x-2, y: y});
-              if (PLAYER_FIELD[y][x-3] === shipMarker) {
-                currentShip.push({id: `#player-${y}${x-3}`, x: x-3, y: y});
-              }
-            }
-          }
-        } catch(exeption) {}
-        try {
-          if (PLAYER_FIELD[y][x+1] === shipMarker) {
-            currentShip.push({id: `#player-${y}${x+1}`, x: x+1, y: y});
-            if (PLAYER_FIELD[y][x+2] === shipMarker) {
-              currentShip.push({id: `#player-${y}${x+2}`, x: x+2, y: y});
-              if (PLAYER_FIELD[y][x+3] === shipMarker) {
-                currentShip.push({id: `#player-${y}${x+3}`, x: x+3, y: y});
-              }
-            }
-          }
-        } catch(exeption) {}
-
         // Закрашиваем клетки расположенные по диагонали в синий
         diagonalCellsID.forEach(cellID => {
           try{
@@ -890,20 +907,9 @@ function gaming() {
           } catch(exeption) {}
         });
 
-        // Проверяем убит корабль или только ранен
-        function isStillAlivePlayerShip() {
-          let isAlive = false;
+        const target = findTargetShip(PLAYER_FIELD, 'player-', x, y);
 
-          currentShip.forEach(block => {
-            if (player_field.querySelector(block.id).style.backgroundColor === 'rgba(150, 150, 150, 0.99)') {
-              isAlive = true;
-            }
-          });
-
-          return isAlive;
-        }
-
-        if (isStillAlivePlayerShip()) { // Если корабль ранен
+        if (isShipAlive(target, 'player')) { // Если корабль ранен
           // Проверяем клетки расположенные перпендикулярно.
           // Если цвет клеток белый или серый, то добавляем в массив возможных целей.
           perpendicularCells.forEach(cell => {
@@ -921,7 +927,7 @@ function gaming() {
           }, 2000);
         } else { // Если корабль убит
           // Закрашиваем поле вокруг корабля в синий цвет
-          currentShip.forEach(block => {
+          target.forEach(block => {
             try{
               if (player_field.querySelector(`#player-${block.y-1}${block.x}`).style.backgroundColor !== 'rgba(255, 0, 0, 0.99)') {
                 player_field.querySelector(`#player-${block.y-1}${block.x}`).style.backgroundColor = 'rgb(0, 0, 255)';
@@ -1003,15 +1009,17 @@ function massage(status, text) {
 
   box.textContent = text;
 
-  box.style = `font-size: ${box.clientHeight}px; visibility: visible;`;
+  box.style = `font-size: ${box.clientHeight}px; visibility: visible; z-index: 50;`;
 
   let count = 1;
   let timer = setInterval(function() {
-  	if (count <= 0) {
+    box.style = `font-size: ${box.clientHeight}px; opacity: ${count}; visibility: visible; z-index: 50;`;
+
+    if (count <= 0) {
+      box.style = `font-size: ${box.clientHeight}px; opacity: ${count}; visibility: visible; z-index: 1;`;
   		clearInterval(timer);
-  	} else {
-  		box.style = `font-size: ${box.clientHeight}px; opacity: ${count}; visibility: visible;`;
   	}
+
   	count = count - 0.1;
   }, 100);
 }
