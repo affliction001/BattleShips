@@ -679,13 +679,82 @@ function gaming() {
     enemy_field.addEventListener('click', playerShot);
 
     function playerShot(event) {
+      // Находим координаты выстрела игрока.
+      let x = +(event.target.id.slice(-1));
+      let y = +(event.target.id.slice(-2, -1));
+
       enemy_field.removeEventListener('click', playerShot);
       // Если попал
       if (event.target.style.backgroundColor === 'rgba(150, 150, 150, 0)') {
         event.target.style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
         --enemy_life;
 
-        massage(2, 'Injured');
+        // Сначала находим корабль в который попали.
+        const currentShip = [];
+        const shipMarker = ENEMY_FIELD[y][x];
+        currentShip.push({id: `#enemy-${y}${x}`, x: x, y: y});
+
+        console.log(currentShip);
+
+        try {
+          if (ENEMY_FIELD[y-1][x] === shipMarker) {
+            currentShip.push({id: `#enemy-${y-1}${x}`, x: x, y: y-1});
+            if (ENEMY_FIELD[y-2][x] === shipMarker) {
+              currentShip.push({id: `#enemy-${y-2}${x}`, x: x, y: y-2});
+              if (ENEMY_FIELD[y-3][x] === shipMarker) {
+                currentShip.push({id: `#enemy-${y-3}${x}`, x: x, y: y-3});
+              }
+            }
+          }
+        } catch(exeption) {}
+        try {
+          if (ENEMY_FIELD[y+1][x] === shipMarker) {
+            currentShip.push({id: `#enemy-${y+1}${x}`, x: x, y: y+1});
+            if (ENEMY_FIELD[y+2][x] === shipMarker) {
+              currentShip.push({id: `#enemy-${y+2}${x}`, x: x, y: y+2});
+              if (ENEMY_FIELD[y+3][x] === shipMarker) {
+                currentShip.push({id: `#enemy-${y+3}${x}`, x: x, y: y+3});
+              }
+            }
+          }
+        } catch(exeption) {}
+        try {
+          if (ENEMY_FIELD[y][x-1] === shipMarker) {
+            currentShip.push({id: `#enemy-${y}${x-1}`, x: x-1, y: y});
+            if (ENEMY_FIELD[y][x-2] === shipMarker) {
+              currentShip.push({id: `#enemy-${y}${x-2}`, x: x-2, y: y});
+              if (ENEMY_FIELD[y][x-3] === shipMarker) {
+                currentShip.push({id: `#enemy-${y}${x-3}`, x: x-3, y: y});
+              }
+            }
+          }
+        } catch(exeption) {}
+        try {
+          if (ENEMY_FIELD[y][x+1] === shipMarker) {
+            currentShip.push({id: `#enemy-${y}${x+1}`, x: x+1, y: y});
+            if (ENEMY_FIELD[y][x+2] === shipMarker) {
+              currentShip.push({id: `#enemy-${y}${x+2}`, x: x+2, y: y});
+              if (ENEMY_FIELD[y][x+3] === shipMarker) {
+                currentShip.push({id: `#enemy-${y}${x+3}`, x: x+3, y: y});
+              }
+            }
+          }
+        } catch(exeption) {}
+
+        // Проверяем убит корабль или только ранен
+        function isStillAliveEnemyShip() {
+          let isAlive = false;
+
+          currentShip.forEach(block => {
+            if (enemy_field.querySelector(block.id).style.backgroundColor === 'rgba(150, 150, 150, 0)') {
+              isAlive = true;
+            }
+          });
+
+          return isAlive;
+        }
+        
+        isStillAliveEnemyShip() ? massage(2, 'Injured') : massage(3, 'Killed');
 
         playerStep();
       }
@@ -822,7 +891,7 @@ function gaming() {
         });
 
         // Проверяем убит корабль или только ранен
-        function stillAlive() {
+        function isStillAlivePlayerShip() {
           let isAlive = false;
 
           currentShip.forEach(block => {
@@ -834,7 +903,7 @@ function gaming() {
           return isAlive;
         }
 
-        if (stillAlive()) { // Если корабль ранен
+        if (isStillAlivePlayerShip()) { // Если корабль ранен
           // Проверяем клетки расположенные перпендикулярно.
           // Если цвет клеток белый или серый, то добавляем в массив возможных целей.
           perpendicularCells.forEach(cell => {
