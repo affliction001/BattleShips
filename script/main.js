@@ -26,6 +26,10 @@ const PLAYER_FIELD = [
 
 const PLAYER_FIELD_MIRROR = [];
 
+// Загружаем аудиоплееры
+const fonMusic = document.querySelector('#fonMusic');
+const actionSounds = document.querySelector('#actionSounds');
+
 // Проверяется пересечение корабля с другими кораблями на поле
 function isIntersectAnotherShip(ship, field) {
   /*
@@ -828,6 +832,9 @@ function drawFieldInWindow(FIELD, PREFIX) {
 
 // Функция вызывается в методе generatePlayerShips после того как игрок расставит все свои корабли!
 function gaming() {
+  fonMusic.src = 'src/audio/sea.mp3';
+  fonMusic.play();
+
   let enemy_life = 20;
   let player_life = 20;
 
@@ -959,8 +966,14 @@ function gaming() {
 
         if (isShipAlive(target, 'enemy')) {
           massage(2, 'Injured');
+
+          actionSounds.src = 'src/audio/injure.mp3';
+          actionSounds.play();
         } else {
           massage(3, 'Killed');
+
+          actionSounds.src = 'src/audio/kill.mp3';
+          actionSounds.play();
 
           // Закрашиваем поле вокруг корабля в синий цвет.
           target.forEach(block => {
@@ -1010,6 +1023,9 @@ function gaming() {
       }
       // Если промахнулся
       if (event.target.targetZone === 'sea') {
+        actionSounds.src = 'src/audio/miss.mp3';
+        actionSounds.play();
+
         enemy_field.removeEventListener('click', playerShot);
 
         event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
@@ -1100,6 +1116,9 @@ function gaming() {
             } catch(exeption) {}
           });
 
+          actionSounds.src = 'src/audio/injure.mp3';
+          actionSounds.play();
+
           // Повторяем ход
           setTimeout(() => {
             enemyStep();
@@ -1136,6 +1155,9 @@ function gaming() {
             } catch(exeption) {}
           });
 
+          actionSounds.src = 'src/audio/kill.mp3';
+          actionSounds.play();
+
           // Зачищаем массив возможных целей
           probableTargets = [];
 
@@ -1160,6 +1182,9 @@ function gaming() {
       player_field.querySelector(target_id).classList.add('targeting');
 
       setTimeout(function() {
+        actionSounds.src = 'src/audio/miss.mp3';
+        actionSounds.play();
+
         player_field.querySelector(target_id).classList.remove('targeting');
         // Отмечаем клетку
         player_field.querySelector(target_id).style.backgroundColor = 'rgb(0, 0, 255)';
