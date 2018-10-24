@@ -464,8 +464,161 @@ function generatePlayerShips() {
     drawFieldInWindow(PLAYER_FIELD, 'player-');
     drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
 
-    document.querySelector('body').addEventListener('keydown', playerEventsForPlaceShips);
+    // Вешаем обработчики событий для кнопок размещения корабля игрока в окне браузера.
+    document.querySelector('#moveLeft').addEventListener('click', event => {
+      if (isIntersectAnotherShip(stepLeft(ship), PLAYER_FIELD_MIRROR)) {
+        ship = stepLeft(ship);
+        console.clear();
+        clearField(PLAYER_FIELD_MIRROR);
+        placeOnPlayerFieldMirror(ship);
 
+        drawFieldInConsole(PLAYER_FIELD);
+        drawFieldInConsole(PLAYER_FIELD_MIRROR);
+
+        drawFieldInWindow(PLAYER_FIELD, 'player-');
+        drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
+      }
+    });
+    document.querySelector('#moveUp').addEventListener('click', event => {
+      if (isIntersectAnotherShip(stepTop(ship), PLAYER_FIELD_MIRROR)) {
+        ship = stepTop(ship);
+        console.clear();
+        clearField(PLAYER_FIELD_MIRROR);
+        placeOnPlayerFieldMirror(ship);
+
+        drawFieldInConsole(PLAYER_FIELD);
+        drawFieldInConsole(PLAYER_FIELD_MIRROR);
+
+        drawFieldInWindow(PLAYER_FIELD, 'player-');
+        drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
+      }
+    });
+    document.querySelector('#moveRight').addEventListener('click', event => {
+      if (isIntersectAnotherShip(stepRight(ship), PLAYER_FIELD_MIRROR)) {
+        ship = stepRight(ship);
+        console.clear();
+        clearField(PLAYER_FIELD_MIRROR);
+        placeOnPlayerFieldMirror(ship);
+
+        drawFieldInConsole(PLAYER_FIELD);
+        drawFieldInConsole(PLAYER_FIELD_MIRROR);
+
+        drawFieldInWindow(PLAYER_FIELD, 'player-');
+        drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
+      }
+    });
+    document.querySelector('#moveDown').addEventListener('click', event => {
+      if (isIntersectAnotherShip(stepBottom(ship), PLAYER_FIELD_MIRROR)) {
+        ship = stepBottom(ship);
+        console.clear();
+        clearField(PLAYER_FIELD_MIRROR);
+        placeOnPlayerFieldMirror(ship);
+
+        drawFieldInConsole(PLAYER_FIELD);
+        drawFieldInConsole(PLAYER_FIELD_MIRROR);
+
+        drawFieldInWindow(PLAYER_FIELD, 'player-');
+        drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
+      }
+    });
+    document.querySelector('#rotate').addEventListener('click', event => {
+      ship = rotateShip(ship);
+      console.clear();
+      clearField(PLAYER_FIELD_MIRROR);
+      placeOnPlayerFieldMirror(ship);
+
+      drawFieldInConsole(PLAYER_FIELD);
+      drawFieldInConsole(PLAYER_FIELD_MIRROR);
+
+      drawFieldInWindow(PLAYER_FIELD, 'player-');
+      drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
+    });
+    document.querySelector('#setShip').addEventListener('click', event => {
+      if (isIntersectAnotherShip(ship, PLAYER_FIELD)) {
+        console.clear();
+        clearField(PLAYER_FIELD_MIRROR);
+        placeOnPlayerField(ship);
+
+        switch (flagForChooseShip) {
+          case 40:
+            ship = createThreeDeckShip('30');
+            flagForChooseShip = 30;
+            break;
+          case 30:
+            ship = createThreeDeckShip('31');
+            flagForChooseShip = 31;
+            break;
+          case 31:
+            ship = createTwoDeckShip('20');
+            flagForChooseShip = 20;
+            break;
+          case 20:
+            ship = createTwoDeckShip('21');
+            flagForChooseShip = 21;
+            break;
+          case 21:
+            ship = createTwoDeckShip('22');
+            flagForChooseShip = 22;
+            break;
+          case 22:
+            ship = createOneDeckShip('10');
+            flagForChooseShip = 10;
+            break;
+          case 10:
+            ship = createOneDeckShip('11');
+            flagForChooseShip = 11;
+            break;
+          case 11:
+            ship = createOneDeckShip('12');
+            flagForChooseShip = 12;
+            break;
+          case 12:
+            ship = createOneDeckShip('13');
+            flagForChooseShip = 13;
+            break;
+          case 13:
+            flagForChooseShip = 14;
+            break;
+        }
+
+        placeOnPlayerFieldMirror(ship);
+
+        drawFieldInConsole(PLAYER_FIELD);
+        drawFieldInConsole(PLAYER_FIELD_MIRROR);
+
+        drawFieldInWindow(PLAYER_FIELD, 'player-');
+        drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-mirror-');
+      }
+
+      if (flagForChooseShip === 14) {
+        document.querySelector('body').removeEventListener('keydown', playerEventsForPlaceShips)
+        console.clear();
+
+        document.querySelector('.player-field-mirror').style.visibility = 'hidden';
+        document.querySelector('.player-field').style.visibility = 'inherit';
+        document.querySelector('.enemy-field').style.visibility = 'hidden';
+
+        drawFieldInConsole(ENEMY_FIELD);
+        drawFieldInConsole(PLAYER_FIELD);
+
+        drawFieldInWindow(ENEMY_FIELD, 'enemy-');
+        drawFieldInWindow(PLAYER_FIELD, 'player-');
+
+        setTimeout(() => {
+          hideShipMoveButtons();
+
+          document.querySelector('.player-field').style.visibility = 'hidden';
+          document.querySelector('.enemy-field').style.visibility = 'inherit';
+
+          // Начинаем игру!
+          gaming();
+        }, 2000);
+      }
+    });
+
+    // Вешаем обработчик событий для размещения кораблей игрока с клавиатуры.
+    document.querySelector('body').addEventListener('keydown', playerEventsForPlaceShips);
+    // Функция для размещения кораблей игрока с калвиатуры.
     function playerEventsForPlaceShips(event) {
       if (event.keyCode === 16) {
         ship = rotateShip(ship);
