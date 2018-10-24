@@ -1141,7 +1141,9 @@ function gaming() {
 
           //Проверяем жизнь игрока, то есть проверка на окончание игры.
           if  (player_life <= 0) {
-            alert('Вы проиграли!!!');
+            setTimeout(() => {
+              alert('Вы проиграли!!!');
+            }, 2000);
           } else {
             setTimeout(() => {
               enemyStep();
