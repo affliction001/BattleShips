@@ -103,31 +103,61 @@ body {
 }
 
 #moveLeft {
+  z-index: 100;
   left: 5vw;
   background: url('../src/img/moveLeft.png') no-repeat center center / cover;
 }
 
 #moveUp {
+  z-index: 100;
   left: 20vw;
   background: url('../src/img/moveUp.png') no-repeat center center / cover;
 }
 
 #moveDown {
+  z-index: 100;
   left: 35vw;
   background: url('../src/img/moveDown.png') no-repeat center center / cover;
 }
 
 #moveRight {
+  z-index: 100;
   left: 50vw;
   background: url('../src/img/moveRight.png') no-repeat center center / cover;
 }
 
 #rotate {
+  z-index: 100;
   right: 20vw;
   background: url('../src/img/rotate.png') no-repeat center center / cover;
 }
 
 #setShip {
+  z-index: 100;
   right: 5vw;
   background: url('../src/img/setShip.png') no-repeat center center / cover;
+}
+
+#moveLeft:active {
+  background: url('../src/img/moveLeftActive.png') no-repeat center center / cover;
+}
+
+#moveUp:active {
+  background: url('../src/img/moveUpActive.png') no-repeat center center / cover;
+}
+
+#moveDown:active {
+  background: url('../src/img/moveDownActive.png') no-repeat center center / cover;
+}
+
+#moveRight:active {
+  background: url('../src/img/moveRightActive.png') no-repeat center center / cover;
+}
+
+#rotate:active {
+  background: url('../src/img/rotateActive.png') no-repeat center center / cover;
+}
+
+#setShip:active {
+  background: url('../src/img/setShipActive.png') no-repeat center center / cover;
 }

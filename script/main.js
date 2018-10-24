@@ -450,6 +450,8 @@ function generatePlayerShips() {
   }
 
   function placeShipsOnField() {
+    showShipMoveButtons();
+
     let flagForChooseShip = 40;
 
     let ship = createFourDeckShip('40');
@@ -610,6 +612,8 @@ function generatePlayerShips() {
           drawFieldInWindow(PLAYER_FIELD, 'player-');
 
           setTimeout(() => {
+            hideShipMoveButtons();
+
             document.querySelector('.player-field').style.visibility = 'hidden';
             document.querySelector('.enemy-field').style.visibility = 'inherit';
 
@@ -773,9 +777,11 @@ function gaming() {
       let x = +(event.target.id.slice(-1));
       let y = +(event.target.id.slice(-2, -1));
 
-      enemy_field.removeEventListener('click', playerShot);
+      // enemy_field.removeEventListener('click', playerShot);
       // Если попал
       if (event.target.targetZone === 'ship') {
+        enemy_field.removeEventListener('click', playerShot);
+
         event.target.targetZone = 'ship-injured';
         event.target.style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
         --enemy_life;
@@ -840,6 +846,8 @@ function gaming() {
       // Если уже стрелял по этой ячейке
       if (event.target.targetZone === 'ship-injured' ||
           event.target.targetZone === 'sea-busy') {
+        enemy_field.removeEventListener('click', playerShot);
+
         event.target.classList.add('miss');
         setTimeout(function() {
           event.target.classList.remove('miss');
@@ -849,6 +857,8 @@ function gaming() {
       }
       // Если промахнулся
       if (event.target.targetZone === 'sea') {
+        enemy_field.removeEventListener('click', playerShot);
+
         event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
         event.target.targetZone = 'sea-busy';
 
@@ -1043,4 +1053,22 @@ function massage(status, text) {
 
   	count = count - 0.1;
   }, 100);
+}
+
+// Фнкции отображения и скрытия кнопок для размещения кораблей игрока.
+function showShipMoveButtons() {
+  document.querySelector('#moveLeft').style.display = 'block';
+  document.querySelector('#moveUp').style.display = 'block';
+  document.querySelector('#moveRight').style.display = 'block';
+  document.querySelector('#moveDown').style.display = 'block';
+  document.querySelector('#rotate').style.display = 'block';
+  document.querySelector('#setShip').style.display = 'block';
+}
+function hideShipMoveButtons() {
+  document.querySelector('#moveLeft').style.display = 'none';
+  document.querySelector('#moveUp').style.display = 'none';
+  document.querySelector('#moveRight').style.display = 'none';
+  document.querySelector('#moveDown').style.display = 'none';
+  document.querySelector('#rotate').style.display = 'none';
+  document.querySelector('#setShip').style.display = 'none';
 }
