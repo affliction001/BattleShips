@@ -11,22 +11,42 @@ body {
 }
 
 .start-page, .player-field, .player-field-mirror, .enemy-field, .win-page, .loose-page {
-  border: 1px solid black;
   width: 100vw;
   height: 100vh;
   position: absolute;
 }
 
 .start-page {
-  visibility: hidden;
+  display: block;
+  background: url('../src/img/bg-startpage.jpg') no-repeat center center / cover;
+}
+
+#langs {
+  position: absolute;
+  top: 40px;
+  left: 50px;
+  padding: 10px;
+	font-family: monospace;
+	font-size: 50px;
+	font-weight: bold;
+  color: #f00;
+  text-shadow: -1px -1px 3px #fff, 2px 2px 4px #000;
+	border-radius: 20px;
+  border: 5px solid #004;
+  background: linear-gradient(180deg, #08c 0%, #06c 50%, #08c 55%, #ddd 100%);
+}
+
+#langs option {
+  font-size: 20px;
+  font-weight: bold;
 }
 
 .player-field {
+  display: none;
   z-index: 20;
 }
 
 .player-field-battlezone, .player-field-mirror-battlezone, .enemy-field-battlezone {
-  border: 1px solid black;
   width: 100vw;
   height: 100vw;
   margin-top: calc((100vh - 100vw) / 2);
@@ -45,6 +65,7 @@ body {
 }
 
 .player-field-mirror {
+  display: none;
   z-index: 30;
 }
 
@@ -53,15 +74,16 @@ body {
 }
 
 .enemy-field {
+  display: none;
   z-index: 10;
 }
 
 .win-page {
-  visibility: hidden;
+  display: none;
 }
 
 .loose-page {
-  visibility: hidden;
+  display: none;
 }
 
 .miss {
