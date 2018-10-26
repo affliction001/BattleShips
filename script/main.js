@@ -1,5 +1,35 @@
+let sound = 'on';
+
 function preparationForTheGame() {
   hideShipMoveButtons();
+
+  const sound_button = document.querySelector('#dynamic');
+  sound_button.addEventListener('click', event => {
+    sound === 'on' ? sound = 'off' : sound = 'on';
+    console.log(sound);
+
+    if (sound === 'on') {
+      sound_button.classList.remove("dynamic-off");
+      sound_button.classList.add("dynamic-on");
+    }
+
+    if (sound === 'off') {
+      sound_button.classList.remove("dynamic-on");
+      sound_button.classList.add("dynamic-off");
+    }
+  });
+
+  const start = document.querySelector('#start');
+  start.addEventListener('click', event => {
+    setTimeout(function() {
+      document.querySelector('.start-page').style = 'display: none';
+      document.querySelector('.player-field').style = 'display: block';
+      document.querySelector('.player-field-mirror').style = 'display: block';
+      document.querySelector('.enemy-field').style = 'display: block';
+
+      startGame();
+    }, 800);
+  });
 }
 
 function startGame() {
@@ -837,8 +867,10 @@ function startGame() {
 
   // Функция вызывается в методе generatePlayerShips после того как игрок расставит все свои корабли!
   function gaming() {
-    fonMusic.src = 'src/audio/sea.mp3';
-    fonMusic.play();
+    if (sound === 'on') {
+      fonMusic.src = 'src/audio/sea.mp3';
+      fonMusic.play();
+    }
 
     let enemy_life = 20;
     let player_life = 20;
@@ -972,13 +1004,17 @@ function startGame() {
           if (isShipAlive(target, 'enemy')) {
             massage(2, 'Injured');
 
-            actionSounds.src = 'src/audio/injure.mp3';
-            actionSounds.play();
+            if (sound === 'on') {
+              actionSounds.src = 'src/audio/injure.mp3';
+              actionSounds.play();
+            }
           } else {
             massage(3, 'Killed');
 
-            actionSounds.src = 'src/audio/kill.mp3';
-            actionSounds.play();
+            if (sound === 'on') {
+              actionSounds.src = 'src/audio/kill.mp3';
+              actionSounds.play();
+            }
 
             // Закрашиваем поле вокруг корабля в синий цвет.
             target.forEach(block => {
@@ -1028,8 +1064,10 @@ function startGame() {
         }
         // Если промахнулся
         if (event.target.targetZone === 'sea') {
-          actionSounds.src = 'src/audio/miss.mp3';
-          actionSounds.play();
+          if (sound === 'on') {
+            actionSounds.src = 'src/audio/miss.mp3';
+            actionSounds.play();
+          }
 
           enemy_field.removeEventListener('click', playerShot);
 
@@ -1121,8 +1159,10 @@ function startGame() {
               } catch(exeption) {}
             });
 
-            actionSounds.src = 'src/audio/injure.mp3';
-            actionSounds.play();
+            if (sound === 'on') {
+              actionSounds.src = 'src/audio/injure.mp3';
+              actionSounds.play();
+            }
 
             // Повторяем ход
             setTimeout(() => {
@@ -1160,8 +1200,10 @@ function startGame() {
               } catch(exeption) {}
             });
 
-            actionSounds.src = 'src/audio/kill.mp3';
-            actionSounds.play();
+            if (sound === 'on') {
+              actionSounds.src = 'src/audio/kill.mp3';
+              actionSounds.play();
+            }
 
             // Зачищаем массив возможных целей
             probableTargets = [];
@@ -1187,8 +1229,10 @@ function startGame() {
         player_field.querySelector(target_id).classList.add('targeting');
 
         setTimeout(function() {
-          actionSounds.src = 'src/audio/miss.mp3';
-          actionSounds.play();
+          if (sound === 'on') {
+            actionSounds.src = 'src/audio/miss.mp3';
+            actionSounds.play();
+          }
 
           player_field.querySelector(target_id).classList.remove('targeting');
           // Отмечаем клетку

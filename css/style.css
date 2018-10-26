@@ -3,6 +3,7 @@
   padding: 0;
   box-sizing: border-box;
   line-height: 1.15;
+  transition: 200ms;
 }
 
 body {
@@ -39,6 +40,43 @@ body {
 #langs option {
   font-size: 20px;
   font-weight: bold;
+}
+
+#dynamic {
+  position: absolute;
+  top: 40px;
+  right: 50px;
+  width: 100px;
+  height: 100px;
+  border-radius: 50px;
+  /* background: url('../src/img/dynamic-on.png') no-repeat center center / cover; */
+}
+
+.dynamic-on {
+  background: url('../src/img/dynamic-on.png') no-repeat center center / cover;
+}
+
+.dynamic-off {
+  background: url('../src/img/dynamic-off.png') no-repeat center center / cover;
+}
+
+#start {
+  position: absolute;
+  top: 50vh;
+  left: calc(50vw - 175px);
+  width: 350px;
+  height: 500px;
+  border: none;
+  outline: none;
+  background: url('../src/img/start-button.png') no-repeat center center / cover;
+}
+
+#start:hover {
+  transform: scale(1.1);
+}
+
+#start:active {
+  transform: scale(1.6) rotateZ(360deg);
 }
 
 .player-field {
