@@ -1,8 +1,28 @@
+const string_data = {
+  EN: {
+    miss: 'Miss',
+    injure: 'Injured',
+    kill: 'Killed'
+  },
+  RU: {
+    miss: 'Промах',
+    injure: 'Ранен',
+    kill: 'Убит'
+  },
+  CH: {
+    miss: '失敗',
+    injure: '受傷',
+    kill: '殺害'
+  }
+}
+
 let sound = 'on';
+let current_lang = 'EN';
 
 function preparationForTheGame() {
   hideShipMoveButtons();
 
+  // Обрабатываем нажатие на кнопку включения и отключения звука в приложении.
   const sound_button = document.querySelector('#dynamic');
   sound_button.addEventListener('click', event => {
     sound === 'on' ? sound = 'off' : sound = 'on';
@@ -19,8 +39,13 @@ function preparationForTheGame() {
     }
   });
 
+  // Обрабатываем нажатие на кнопку начала игры или просто Старт.
   const start = document.querySelector('#start');
   start.addEventListener('click', event => {
+    // Обрабатываем выбор языка интерфейса приложения.
+    const langs = document.querySelector('#langs');
+    current_lang = langs.value;
+
     setTimeout(function() {
       document.querySelector('.start-page').style = 'display: none';
       document.querySelector('.player-field').style = 'display: block';
@@ -1002,14 +1027,14 @@ function startGame() {
           const target = findTargetShip(ENEMY_FIELD, 'enemy-', x, y);
 
           if (isShipAlive(target, 'enemy')) {
-            massage(2, 'Injured');
+            massage(2, string_data[current_lang].injure);
 
             if (sound === 'on') {
               actionSounds.src = 'src/audio/injure.mp3';
               actionSounds.play();
             }
           } else {
-            massage(3, 'Killed');
+            massage(3, string_data[current_lang].kill);
 
             if (sound === 'on') {
               actionSounds.src = 'src/audio/kill.mp3';
@@ -1074,7 +1099,7 @@ function startGame() {
           event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
           event.target.targetZone = 'sea-busy';
 
-          massage(1, 'Miss');
+          massage(1, string_data[current_lang].miss);
 
           setTimeout(() => {
             enemyStep();
@@ -1164,6 +1189,8 @@ function startGame() {
               actionSounds.play();
             }
 
+            massage(1, string_data[current_lang].injure);
+
             // Повторяем ход
             setTimeout(() => {
               enemyStep();
@@ -1205,6 +1232,8 @@ function startGame() {
               actionSounds.play();
             }
 
+            massage(1, string_data[current_lang].kill);
+
             // Зачищаем массив возможных целей
             probableTargets = [];
 
@@ -1233,6 +1262,8 @@ function startGame() {
             actionSounds.src = 'src/audio/miss.mp3';
             actionSounds.play();
           }
+
+          massage(1, string_data[current_lang].miss);
 
           player_field.querySelector(target_id).classList.remove('targeting');
           // Отмечаем клетку
