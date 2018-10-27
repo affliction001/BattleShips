@@ -8,7 +8,10 @@
 
 body {
   position: relative;
-  background-color: rgb(60, 60, 250);
+}
+
+.player-field, .enemy-field {
+  background: url('../src/img/sea_bg.jpg') no-repeat center center / cover;
 }
 
 .start-page, .player-field, .player-field-mirror, .enemy-field, .win-page, .loose-page {
