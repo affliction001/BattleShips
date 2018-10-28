@@ -142,9 +142,9 @@ body {
 }
 
 @keyframes shadow {
-	from {box-shadow: 0 0 10px 15px red inset;}
-	50% {box-shadow: 0 0 15px 20px red inset;}
-	to {box-shadow: 0 0 20px 25px red inset;}
+	from {box-shadow: 0 0 10px 15px gold inset;}
+	50% {box-shadow: 0 0 15px 20px gold inset;}
+	to {box-shadow: 0 0 20px 25px gold inset;}
 }
 
 .targeting {
@@ -171,6 +171,7 @@ body {
 	height: 20vw;
   top: 5vh;
 	text-align: center;
+  text-shadow: -2px -2px 5px #000, 2px 2px 5px #fff;
 	font-weight: bold;
 	font-family: monospace;
 	color: #f00;

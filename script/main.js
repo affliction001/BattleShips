@@ -1314,14 +1314,14 @@ function startGame() {
 
     box.textContent = text;
 
-    box.style = `font-size: ${box.clientHeight}px; visibility: visible; z-index: 50;`;
+    box.style = `font-size: ${box.clientHeight / 2}px; visibility: visible; z-index: 50;`;
 
     let count = 1;
     let timer = setInterval(function() {
-      box.style = `font-size: ${box.clientHeight}px; opacity: ${count}; visibility: visible; z-index: 50;`;
+      box.style = `font-size: ${box.clientHeight / 2}px; opacity: ${count}; visibility: visible; z-index: 50;`;
 
       if (count <= 0) {
-        box.style = `font-size: ${box.clientHeight}px; opacity: ${count}; visibility: visible; z-index: 1;`;
+        box.style = `font-size: ${box.clientHeight / 2}px; opacity: ${count}; visibility: visible; z-index: 1;`;
     		clearInterval(timer);
     	}
 
