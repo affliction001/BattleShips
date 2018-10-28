@@ -2,18 +2,24 @@ const string_data = {
   EN: {
     miss: 'Miss',
     injure: 'Injured',
-    kill: 'Killed'
+    kill: 'Killed',
+    stepComputer: 'Computer step',
+    stepPlayer: 'Player step'
   },
   RU: {
     miss: 'Промах',
     injure: 'Ранен',
-    kill: 'Убит'
+    kill: 'Убит',
+    stepComputer: 'Шаг компьютера',
+    stepPlayer: 'Шаг игрока'
   },
   CH: {
     miss: '失敗',
     injure: '受傷',
-    kill: '殺害'
-  }
+    kill: '殺害',
+    stepComputer: '计算机举动',
+    stepPlayer: '球员的举动'
+  },
 }
 
 let sound = 'on';
@@ -988,6 +994,8 @@ function startGame() {
 
     // Шаг игрока.
     function playerStep() {
+      showPlayerStep();
+
       // Шаг игрока, значит скрываем поле игрока и отбражаем поле компьютера
       player_field.style.visibility = 'hidden';
       enemy_field.style.visibility = 'inherit';
@@ -1101,6 +1109,8 @@ function startGame() {
 
           massage(1, string_data[current_lang].miss);
 
+          hidePlayerStep();
+
           setTimeout(() => {
             enemyStep();
           }, 1000);
@@ -1115,6 +1125,8 @@ function startGame() {
     // Шаг компьютера.
     let probableTargets = [];
     function enemyStep() {
+      showComputerStep();
+
       // Шаг компьютера. Значит поле компьютера скрываем, отображаем поле игрока.
       player_field.style.visibility = 'inherit';
       enemy_field.style.visibility = 'hidden';
@@ -1265,6 +1277,8 @@ function startGame() {
 
           massage(1, string_data[current_lang].miss);
 
+          hideComputerStep();
+
           player_field.querySelector(target_id).classList.remove('targeting');
           // Отмечаем клетку
           player_field.querySelector(target_id).style.backgroundColor = 'rgb(0, 0, 255)';
@@ -1313,6 +1327,57 @@ function startGame() {
 
     	count = count - 0.1;
     }, 100);
+  }
+
+  // Функции показывают кому принадлежит текущий ход.
+  // При отображении поля игрока - ход компьютера, при отображении поля компьютера - ход игрока.
+  function showPlayerStep() {
+    const whosStep = document.querySelector('#whosStepIsNow');
+    const text = string_data[current_lang].stepPlayer;
+    let opacityValue = 0;
+    whosStep.textContent = text;
+    const timer = setInterval(function() {
+      if (opacityValue >= 0.9) clearInterval(timer);
+      whosStep.style = `opacity: ${opacityValue};
+                        font-size: ${whosStep.clientHeight / 2}px;
+                        display: block;`;
+      opacityValue += 0.1;
+    }, 50);
+  }
+  function hidePlayerStep() {
+    const whosStep = document.querySelector('#whosStepIsNow');
+    let opacityValue = 1;
+    const timer = setInterval(function() {
+      if (opacityValue <= 0.1) clearInterval(timer);
+      whosStep.style = `opacity: ${opacityValue};
+                        font-size: ${whosStep.clientHeight / 2}px;
+                        display: block;`;
+      opacityValue -= 0.1;
+    }, 50);
+  }
+  function showComputerStep() {
+    const whosStep = document.querySelector('#whosStepIsNow');
+    const text = string_data[current_lang].stepComputer;
+    let opacityValue = 0;
+    whosStep.textContent = text;
+    const timer = setInterval(function() {
+      if (opacityValue >= 0.9) clearInterval(timer);
+      whosStep.style = `opacity: ${opacityValue};
+                        font-size: ${whosStep.clientHeight / 2}px;
+                        display: block;`;
+      opacityValue += 0.1;
+    }, 50);
+  }
+  function hideComputerStep() {
+    const whosStep = document.querySelector('#whosStepIsNow');
+    let opacityValue = 1;
+    const timer = setInterval(function() {
+      if (opacityValue <= 0.1) clearInterval(timer);
+      whosStep.style = `opacity: ${opacityValue};
+                        font-size: ${whosStep.clientHeight / 2}px;
+                        display: block;`;
+      opacityValue -= 0.1;
+    }, 50);
   }
 }
 

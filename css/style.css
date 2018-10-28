@@ -10,6 +10,16 @@ body {
   position: relative;
 }
 
+.container {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
 .player-field, .enemy-field {
   background: url('../src/img/sea_bg.jpg') no-repeat center center / cover;
 }
@@ -139,6 +149,20 @@ body {
 
 .targeting {
 	animation: shadow 500ms infinite linear;
+}
+
+#whosStepIsNow {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  width: 100vw;
+  height: 20vw;
+  text-align: center;
+  text-shadow: -2px -2px 4px #000, 2px 2px 4px #fff;
+  font-family: monospace;
+  font-weight: bold;
+  color: #0f0;
+  z-index: 60;
 }
 
 .msg {
