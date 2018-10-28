@@ -143,10 +143,9 @@ body {
 
 .msg {
   position: absolute;
-  width: 50vw;
+  width: 100vw;
 	height: 20vw;
   top: 5vh;
-  left: 25vw;
 	text-align: center;
 	font-weight: bold;
 	font-family: monospace;
