@@ -128,10 +128,20 @@ body {
 
 .win-page {
   display: none;
+  background: #0f0;
 }
 
 .loose-page {
   display: none;
+  background: #f00;
+}
+
+.play-again {
+  position: absolute;
+  width: 50vw;
+  height: 20vw;
+  top: 60vh;
+  left: 25vw;
 }
 
 .miss {

@@ -483,14 +483,6 @@ function startGame() {
       return newShip;
     }
 
-    function clearField(field) {
-      for (let i = 0; i < field.length; i++) {
-        for (let j = 0; j < field[0].length; j++) {
-          field[i][j] = 0;
-        }
-      }
-    }
-
     function createFourDeckShip(marker) {
       let X = 0;
       let Y = 0;
@@ -892,6 +884,15 @@ function startGame() {
     }
   }
 
+  // Очищается поле от кораблей.
+  function clearField(field) {
+    for (let i = 0; i < field.length; i++) {
+      for (let j = 0; j < field[0].length; j++) {
+        field[i][j] = 0;
+      }
+    }
+  }
+
   /*
     Основной игровой процесс
   */
@@ -1116,8 +1117,14 @@ function startGame() {
           }, 1000);
         }
 
+        // Если выиграл
         if (enemy_life <= 0) {
-          setTimeout(() => { alert('You win!!!'); }, 500);
+          setTimeout(() => {
+            document.querySelector('.player-field').style.display = 'none';
+            document.querySelector('.enemy-field').style.display = 'none';
+            document.querySelector('#whosStepIsNow').style.display = 'none';
+            document.querySelector('.win-page').style.display = 'block';
+          }, 2000);
         }
       }
     }
@@ -1252,7 +1259,10 @@ function startGame() {
             //Проверяем жизнь игрока, то есть проверка на окончание игры.
             if  (player_life <= 0) {
               setTimeout(() => {
-                alert('Вы проиграли!!!');
+                document.querySelector('.player-field').style.display = 'none';
+                document.querySelector('.enemy-field').style.display = 'none';
+                document.querySelector('#whosStepIsNow').style.display = 'none';
+                document.querySelector('.loose-page').style.display = 'block';
               }, 2000);
             } else {
               setTimeout(() => {
@@ -1379,6 +1389,14 @@ function startGame() {
       opacityValue -= 0.1;
     }, 50);
   }
+
+  // Начинаем игру заново
+  document.querySelector('#playAgainForWin').addEventListener('click', event => {
+    window.location.reload(true);
+  });
+  document.querySelector('#playAgainForLoose').addEventListener('click', event => {
+    window.location.reload(true);
+  });
 }
 
 // Фнкции отображения и скрытия кнопок для размещения кораблей игрока.
