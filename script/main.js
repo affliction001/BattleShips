@@ -664,9 +664,9 @@ function startGame() {
           document.querySelector('body').removeEventListener('keydown', playerEventsForPlaceShips)
           console.clear();
 
-          document.querySelector('.player-field-mirror').style.visibility = 'hidden';
-          document.querySelector('.player-field').style.visibility = 'inherit';
-          document.querySelector('.enemy-field').style.visibility = 'hidden';
+          document.querySelector('.player-field-mirror').style.display = 'none';
+          document.querySelector('.player-field').style.display = 'block';
+          document.querySelector('.enemy-field').style.display = 'none';
 
           drawFieldInConsole(ENEMY_FIELD);
           drawFieldInConsole(PLAYER_FIELD);
@@ -677,8 +677,8 @@ function startGame() {
           setTimeout(() => {
             hideShipMoveButtons();
 
-            document.querySelector('.player-field').style.visibility = 'hidden';
-            document.querySelector('.enemy-field').style.visibility = 'inherit';
+            document.querySelector('.player-field').style.display = 'none';
+            document.querySelector('.enemy-field').style.display = 'block';
 
             // Начинаем игру!
             gaming();
@@ -824,9 +824,9 @@ function startGame() {
             document.querySelector('body').removeEventListener('keydown', playerEventsForPlaceShips)
             console.clear();
 
-            document.querySelector('.player-field-mirror').style.visibility = 'hidden';
-            document.querySelector('.player-field').style.visibility = 'inherit';
-            document.querySelector('.enemy-field').style.visibility = 'hidden';
+            document.querySelector('.player-field-mirror').style.display = 'none';
+            document.querySelector('.player-field').style.display = 'block';
+            document.querySelector('.enemy-field').style.display = 'none';
 
             drawFieldInConsole(ENEMY_FIELD);
             drawFieldInConsole(PLAYER_FIELD);
@@ -837,8 +837,8 @@ function startGame() {
             setTimeout(() => {
               hideShipMoveButtons();
 
-              document.querySelector('.player-field').style.visibility = 'hidden';
-              document.querySelector('.enemy-field').style.visibility = 'inherit';
+              document.querySelector('.player-field').style.display = 'none';
+              document.querySelector('.enemy-field').style.display = 'block';
 
               // Начинаем игру!
               gaming();
@@ -997,8 +997,8 @@ function startGame() {
       showPlayerStep();
 
       // Шаг игрока, значит скрываем поле игрока и отбражаем поле компьютера
-      player_field.style.visibility = 'hidden';
-      enemy_field.style.visibility = 'inherit';
+      enemy_field.style.display = 'block';
+      player_field.style.display = 'none';
 
       enemy_field.addEventListener('click', playerShot);
 
@@ -1128,8 +1128,8 @@ function startGame() {
       showComputerStep();
 
       // Шаг компьютера. Значит поле компьютера скрываем, отображаем поле игрока.
-      player_field.style.visibility = 'inherit';
-      enemy_field.style.visibility = 'hidden';
+      player_field.style.display = 'block';
+      enemy_field.style.display = 'none';
 
       let x = 0;
       let y = 0;
