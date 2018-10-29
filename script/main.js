@@ -878,14 +878,14 @@ function startGame() {
 
         if (FIELD[row][cell] === 0) {
           document.querySelector(`#${id}`).targetZone = 'sea';
-          document.querySelector(`#${id}`).style.backgroundColor = 'rgb(255, 255, 255)';
+          document.querySelector(`#${id}`).style.background = 'url("src/img/fog.png") no-repeat center center / cover';
         } else {
           if (prefix === 'enemy-') {
             document.querySelector(`#${id}`).targetZone = 'ship';
-            document.querySelector(`#${id}`).style.backgroundColor = 'rgb(255, 255, 255)';
+            document.querySelector(`#${id}`).style.background = 'url("src/img/fog.png") no-repeat center center / cover';
           } else {
             document.querySelector(`#${id}`).targetZone = 'ship';
-            document.querySelector(`#${id}`).style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
+            document.querySelector(`#${id}`).style.background = 'url("src/img/ship.png") no-repeat center center / cover';
           }
         }
       }
@@ -1013,7 +1013,7 @@ function startGame() {
           enemy_field.removeEventListener('click', playerShot);
 
           event.target.targetZone = 'ship-injured';
-          event.target.style.backgroundColor = 'rgba(150, 150, 150, 0.99)';
+          event.target.style.background = 'url("src/img/injure-ship.png") no-repeat center center / cover';
           --enemy_life;
 
           // Массив ячеек где точно нет кораблей.
@@ -1027,7 +1027,7 @@ function startGame() {
           // Закрашиваем клетки расположенные по диагонали в синий
           diagonalCellsID.forEach(cellID => {
             try{
-              enemy_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
+              enemy_field.querySelector(cellID).style.background = 'none';
               enemy_field.querySelector(cellID).targetZone = 'sea-busy';
             } catch(exeption) {}
           });
@@ -1053,28 +1053,28 @@ function startGame() {
             target.forEach(block => {
               try{
                 if (enemy_field.querySelector(`#enemy-${block.y-1}${block.x}`).targetZone !== 'ship-injured') {
-                  enemy_field.querySelector(`#enemy-${block.y-1}${block.x}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+                  enemy_field.querySelector(`#enemy-${block.y-1}${block.x}`).style.background = 'none';
                   enemy_field.querySelector(`#enemy-${block.y-1}${block.x}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
 
               try{
                 if (enemy_field.querySelector(`#enemy-${block.y}${block.x+1}`).targetZone !== 'ship-injured') {
-                  enemy_field.querySelector(`#enemy-${block.y}${block.x+1}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+                  enemy_field.querySelector(`#enemy-${block.y}${block.x+1}`).style.background = 'none';
                   enemy_field.querySelector(`#enemy-${block.y}${block.x+1}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
 
               try{
                 if (enemy_field.querySelector(`#enemy-${block.y+1}${block.x}`).targetZone !== 'ship-injured') {
-                  enemy_field.querySelector(`#enemy-${block.y+1}${block.x}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+                  enemy_field.querySelector(`#enemy-${block.y+1}${block.x}`).style.background = 'none';
                   enemy_field.querySelector(`#enemy-${block.y+1}${block.x}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
 
               try{
                 if (enemy_field.querySelector(`#enemy-${block.y}${block.x-1}`).targetZone !== 'ship-injured') {
-                  enemy_field.querySelector(`#enemy-${block.y}${block.x-1}`).style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+                  enemy_field.querySelector(`#enemy-${block.y}${block.x-1}`).style.background = 'none';
                   enemy_field.querySelector(`#enemy-${block.y}${block.x-1}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
@@ -1104,7 +1104,7 @@ function startGame() {
 
           enemy_field.removeEventListener('click', playerShot);
 
-          event.target.style.backgroundColor = 'rgba(0, 0, 255, 0.99)';
+          event.target.style.background = 'none';
           event.target.targetZone = 'sea-busy';
 
           massage(1, string_data[current_lang].miss);
@@ -1156,7 +1156,7 @@ function startGame() {
 
           // Уменьщаем жизнь игрока на единицу и закрашиваем клетку в красный цвет.
           player_life--;
-          player_field.querySelector(target_id).style.backgroundColor = 'rgba(255, 0, 0, 0.99)';
+          player_field.querySelector(target_id).style.background = 'url("src/img/injure-ship.png") no-repeat center center / cover';
           player_field.querySelector(target_id).targetZone = 'ship-injured';
 
           // Массив ячеек где точно нет кораблей.
@@ -1177,7 +1177,7 @@ function startGame() {
           // Закрашиваем клетки расположенные по диагонали в синий
           diagonalCellsID.forEach(cellID => {
             try{
-              player_field.querySelector(cellID).style.backgroundColor = 'rgb(0, 0, 255)';
+              player_field.querySelector(cellID).style.background = 'none';
               player_field.querySelector(cellID).targetZone = 'sea-busy';
             } catch(exeption) {}
           });
@@ -1212,28 +1212,28 @@ function startGame() {
             target.forEach(block => {
               try{
                 if (player_field.querySelector(`#player-${block.y-1}${block.x}`).targetZone !== 'ship-injured') {
-                  player_field.querySelector(`#player-${block.y-1}${block.x}`).style.backgroundColor = 'rgb(0, 0, 255)';
+                  player_field.querySelector(`#player-${block.y-1}${block.x}`).style.background = 'none';
                   player_field.querySelector(`#player-${block.y-1}${block.x}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
 
               try{
                 if (player_field.querySelector(`#player-${block.y}${block.x+1}`).targetZone !== 'ship-injured') {
-                  player_field.querySelector(`#player-${block.y}${block.x+1}`).style.backgroundColor = 'rgb(0, 0, 255)';
+                  player_field.querySelector(`#player-${block.y}${block.x+1}`).style.background = 'none';
                   player_field.querySelector(`#player-${block.y}${block.x+1}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
 
               try{
                 if (player_field.querySelector(`#player-${block.y+1}${block.x}`).targetZone !== 'ship-injured') {
-                  player_field.querySelector(`#player-${block.y+1}${block.x}`).style.backgroundColor = 'rgb(0, 0, 255)';
+                  player_field.querySelector(`#player-${block.y+1}${block.x}`).style.background = 'none';
                   player_field.querySelector(`#player-${block.y+1}${block.x}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
 
               try{
                 if (player_field.querySelector(`#player-${block.y}${block.x-1}`).targetZone !== 'ship-injured') {
-                  player_field.querySelector(`#player-${block.y}${block.x-1}`).style.backgroundColor = 'rgb(0, 0, 255)';
+                  player_field.querySelector(`#player-${block.y}${block.x-1}`).style.background = 'none';
                   player_field.querySelector(`#player-${block.y}${block.x-1}`).targetZone = 'sea-busy';
                 }
               } catch(exeption) {}
@@ -1281,7 +1281,7 @@ function startGame() {
 
           player_field.querySelector(target_id).classList.remove('targeting');
           // Отмечаем клетку
-          player_field.querySelector(target_id).style.backgroundColor = 'rgb(0, 0, 255)';
+          player_field.querySelector(target_id).style.background = 'none';
           player_field.querySelector(target_id).targetZone = 'sea-busy';
 
           // Передаем ход игроку ...
