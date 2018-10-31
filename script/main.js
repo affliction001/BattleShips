@@ -22,6 +22,9 @@ const string_data = {
   },
 }
 
+let enemy_life = 20;
+let player_life = 20;
+
 let sound = 'on';
 let current_lang = 'EN';
 
@@ -899,13 +902,12 @@ function startGame() {
 
   // Функция вызывается в методе generatePlayerShips после того как игрок расставит все свои корабли!
   function gaming() {
-    if (sound === 'on') {
-      fonMusic.src = 'src/audio/sea.mp3';
-      fonMusic.play();
-    }
-
-    let enemy_life = 20;
-    let player_life = 20;
+    try {
+      if (sound === 'on') {
+        fonMusic.src = 'src/audio/sea.mp3';
+        fonMusic.play();
+      }
+    } catch (exeption) {}
 
     const player_field = document.querySelector('.player-field');
     const enemy_field = document.querySelector('.enemy-field');
@@ -997,6 +999,8 @@ function startGame() {
     function playerStep() {
       showPlayerStep();
 
+      console.log(`Player: ${player_life}. | Enemy: ${enemy_life}.`);
+
       // Шаг игрока, значит скрываем поле игрока и отбражаем поле компьютера
       enemy_field.style.display = 'block';
       player_field.style.display = 'none';
@@ -1008,7 +1012,6 @@ function startGame() {
         let x = +(event.target.id.slice(-1));
         let y = +(event.target.id.slice(-2, -1));
 
-        // enemy_field.removeEventListener('click', playerShot);
         // Если попал
         if (event.target.targetZone === 'ship') {
           enemy_field.removeEventListener('click', playerShot);
@@ -1133,6 +1136,8 @@ function startGame() {
     let probableTargets = [];
     function enemyStep() {
       showComputerStep();
+
+      console.log(`Player: ${player_life}. | Enemy: ${enemy_life}.`);
 
       // Шаг компьютера. Значит поле компьютера скрываем, отображаем поле игрока.
       player_field.style.display = 'block';
@@ -1391,12 +1396,27 @@ function startGame() {
   }
 
   // Начинаем игру заново
-  document.querySelector('#playAgainForWin').addEventListener('click', event => {
-    window.location.reload(true);
-  });
-  document.querySelector('#playAgainForLoose').addEventListener('click', event => {
-    window.location.reload(true);
-  });
+  document.querySelector('#playAgainForWin').addEventListener('click', startNewGame);
+  document.querySelector('#playAgainForLoose').addEventListener('click', startNewGame);
+  function startNewGame() {
+    // document.querySelector('.player-field').style = 'display: none';
+    // document.querySelector('.player-field-mirror').style = 'display: none';
+    // document.querySelector('.enemy-field').style = 'display: none';
+    // document.querySelector('.win-page').style = 'display: none';
+    // document.querySelector('.loose-page').style = 'display: none';
+    // document.querySelector('.start-page').style = 'display: block';
+    //
+    // clearField(PLAYER_FIELD);
+    // clearField(PLAYER_FIELD_MIRROR);
+    // clearField(ENEMY_FIELD);
+    // drawFieldInWindow(ENEMY_FIELD, 'enemy-');
+    // drawFieldInWindow(PLAYER_FIELD, 'player-');
+    // drawFieldInWindow(PLAYER_FIELD_MIRROR, 'player-');``
+    //
+    // enemy_life = 20;
+    // player_life = 20;
+    // preparationForTheGame();
+  }
 }
 
 // Фнкции отображения и скрытия кнопок для размещения кораблей игрока.
