@@ -1000,8 +1000,6 @@ function StartBattleShip() {
       function playerStep() {
         showPlayerStep();
 
-        console.log(`Player: ${player_life}. | Enemy: ${enemy_life}.`);
-
         // Шаг игрока, значит скрываем поле игрока и отбражаем поле компьютера
         enemy_field.style.display = 'block';
         player_field.style.display = 'none';
@@ -1137,8 +1135,6 @@ function StartBattleShip() {
       let probableTargets = [];
       function enemyStep() {
         showComputerStep();
-
-        console.log(`Player: ${player_life}. | Enemy: ${enemy_life}.`);
 
         // Шаг компьютера. Значит поле компьютера скрываем, отображаем поле игрока.
         player_field.style.display = 'block';
@@ -1400,7 +1396,13 @@ function StartBattleShip() {
     document.querySelector('#playAgainForWin').addEventListener('click', startNewGame);
     document.querySelector('#playAgainForLoose').addEventListener('click', startNewGame);
     function startNewGame() {
-      // window.location.reload(true);
+      document.querySelector('.start-page').style = 'display: block';
+      document.querySelector('.player-field').style = 'display: none';
+      document.querySelector('.player-field-mirror').style = 'display: none';
+      document.querySelector('.enemy-field').style = 'display: none';
+      document.querySelector('.win-page').style = 'display: none';
+      document.querySelector('.loose-page').style = 'display: none';
+
       StartBattleShip();
     }
   }
