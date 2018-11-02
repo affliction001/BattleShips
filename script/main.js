@@ -1121,7 +1121,16 @@ function StartBattleShip() {
 
           // Если выиграл
           if (enemy_life <= 0) {
+            showTargetZoneAttribute('enemy-');
+
             setTimeout(() => {
+              clearField(ENEMY_FIELD);
+              clearField(PLAYER_FIELD);
+              drawFieldInWindow(ENEMY_FIELD, 'enemy-');
+              drawFieldInWindow(PLAYER_FIELD, 'player-');
+              enemy_life = 20;
+              player_life = 20;
+
               document.querySelector('.player-field').style.display = 'none';
               document.querySelector('.enemy-field').style.display = 'none';
               document.querySelector('#whosStepIsNow').style.display = 'none';
@@ -1396,10 +1405,13 @@ function StartBattleShip() {
     document.querySelector('#playAgainForWin').addEventListener('click', startNewGame);
     document.querySelector('#playAgainForLoose').addEventListener('click', startNewGame);
     function startNewGame() {
+      clearField(ENEMY_FIELD);
+      clearField(PLAYER_FIELD);
+      drawFieldInWindow(ENEMY_FIELD, 'enemy-');
+      drawFieldInWindow(PLAYER_FIELD, 'player-');
+
       document.querySelector('.start-page').style = 'display: block';
-      document.querySelector('.player-field').style = 'display: none';
       document.querySelector('.player-field-mirror').style = 'display: none';
-      document.querySelector('.enemy-field').style = 'display: none';
       document.querySelector('.win-page').style = 'display: none';
       document.querySelector('.loose-page').style = 'display: none';
 
@@ -1429,3 +1441,12 @@ function StartBattleShip() {
 }
 
 StartBattleShip();
+
+// Метод для теста.
+function showTargetZoneAttribute(prefix) {
+  for (let y = 0; y < 10; y++) {
+    for (let x = 0; x < 10; x++) {
+      console.log(`${prefix}${y}${x}` + ' - ' + document.querySelector(`#${prefix}${y}${x}`).targetZone);
+    }
+  }
+}
