@@ -1,9 +1,64 @@
+const COMPUTER_FIELD = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+const PLAYER_FIELD = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+const PLAYER_FIELD_MIRROR = [
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+];
+
+/*
+  Player interface.
+*/
+
 class Player {
   constructor(field) {
     this.field = field;
   }
 
-  generateShips() {
+  /* В качестве аргумента принимает массив размеров кораблей, из которых функция
+  генерирует корабли и размещает на игровом поле Игрока. Имеет значение по
+   умолчанию. */
+  generateShips(shipsSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]) {
+    const readyShips = [];
+
+    function buildShip(size) {
+      const ship = [];
+      for (let i = 0; i < size; i++) {
+         ship.push({x: i, y: 0});
+      }
+      return ship;
+    }
+
+
     console.log('Player\'s ships is ganerated.');
     return true;
   }
@@ -19,6 +74,10 @@ class Player {
     return status;
   }
 }
+
+/*
+  Computer interface.
+*/
 
 class Computer {
   constructor(field) {
@@ -41,6 +100,10 @@ class Computer {
     return status;
   }
 }
+
+/*
+  Screen messages.
+*/
 
 class Message {
   constructor(stringsData) {
@@ -73,8 +136,8 @@ class Message {
 */
 
 function main() {
-  const player = new Player([]);
-  const computer = new Computer([]);
+  const player = new Player(PLAYER_FIELD);
+  const computer = new Computer(COMPUTER_FIELD);
   const message = new Message();
 
   player.setShips();
