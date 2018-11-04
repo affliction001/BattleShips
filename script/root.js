@@ -58,14 +58,16 @@ class Player {
       return ship;
     }
 
+    shipsSizes.forEach(size => {
+      readyShips.push(buildShip(size));
+    });
 
-    console.log('Player\'s ships is ganerated.');
-    return true;
+    return readyShips;
   }
 
   setShips() {
-    this.generateShips();
-    console.log('Player\'s ships is set.');
+    const ships = this.generateShips();
+    
     return true;
   }
 
