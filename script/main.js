@@ -1,3 +1,5 @@
+'use strict';
+
 function StartBattleShip() {
   const string_data = {
     EN: {

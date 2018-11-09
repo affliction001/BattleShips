@@ -6,8 +6,10 @@
   transition: 200ms;
 }
 
+.container {
+  text-align: center;
+}
+
 #canvas {
-  border: 1px solid black;
-  width: 100vw;
-  height: 100vw;
+  border: 10px solid black;
 }

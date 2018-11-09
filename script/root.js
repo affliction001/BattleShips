@@ -1,3 +1,5 @@
+'use strict';
+
 const COMPUTER_FIELD = [
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -44,9 +46,6 @@ class Player {
     this.field = field;
   }
 
-  /* В качестве аргумента принимает массив размеров кораблей, из которых функция
-  генерирует корабли и размещает на игровом поле Игрока. Имеет значение по
-   умолчанию. */
   generateShips(shipsSizes = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]) {
     const readyShips = [];
 
@@ -67,7 +66,7 @@ class Player {
 
   setShips() {
     const ships = this.generateShips();
-    
+
     return true;
   }
 
@@ -145,6 +144,7 @@ function main() {
   player.setShips();
   computer.setShips();
 
+  // Здесь шаг игрока
   while (true) {
     while (true) {
       console.log('');
@@ -169,6 +169,7 @@ function main() {
       }
     }
 
+    // Здесь шаг компьютера
     while (true) {
       console.log('');
       message.showWhosStepIsNow('computer');
