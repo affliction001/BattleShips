@@ -81,18 +81,165 @@ class Computer {
       return flag;
     }
 
+    function markShipOnField(ship, field) {
+      ship.forEach(block => {
+        field[block.y][block.x] = '2';
+      });
+    }
+
     if (isIntersect(this.field, ship)) {
+      markShipOnField(ship, this.field);
+
       if (ship.length > 1) {
         if (ship[0].y === ship[1].y) {
-          
+          if (ship[0].x === 0 && ship[0].y === 0) {
+            this.field[ship[0].y + 1][ship[0].x] = '1';
+            this.field[ship[0].y + 1][ship[ship.length - 1].x + 1] = '1';
+            this.field[ship[0].y + 1][ship[ship.length - 1].x] = '1';
+            this.field[ship[0].y][ship[ship.length - 1].x + 1] = '1';
+
+            for (let i = 1; i < ship.length - 1; i++) {
+              this.field[ship[0].y + 1][ship[i].x] = '1';
+            }
+          } else if (ship[0].x === 9 && ship[0].y === 0) {
+            this.field[ship[0].y + 1][ship[0].x] = '1';
+            this.field[ship[0].y + 1][ship[ship.length - 1].x] = '1';
+            this.field[ship[0].y + 1][ship[ship.length - 1].x - 1] = '1';
+            this.field[ship[0].y][ship[ship.length - 1].x - 1] = '1';
+
+            for (let i = 1; i < ship.length - 1; i++) {
+              this.field[ship[0].y + 1][ship[i].x] = '1';
+            }
+          } else if (ship[0].x === 9 && ship[0].y === 9) {
+            this.field[ship[0].y - 1][ship[0].x] = '1';
+            this.field[ship[0].y - 1][ship[ship.length - 1].x] = '1';
+            this.field[ship[0].y][ship[ship.length - 1].x - 1] = '1';
+            this.field[ship[0].y - 1][ship[ship.length - 1].x - 1] = '1';
+
+            for (let i = 1; i < ship.length - 1; i++) {
+              this.field[ship[0].y - 1][ship[i].x] = '1';
+            }
+          } else if (ship[0].x === 0 && ship[0].y === 9) {
+            this.field[ship[0].y - 1][ship[0].x] = '1';
+            this.field[ship[0].y - 1][ship[ship.length - 1].x] = '1';
+            this.field[ship[0].y][ship[ship.length - 1].x + 1] = '1';
+            this.field[ship[0].y - 1][ship[ship.length - 1].x + 1] = '1';
+
+            for (let i = 1; i < ship.length - 1; i++) {
+              this.field[ship[0].y - 1][ship[i].x] = '1';
+            }
+          } else if (ship[0].y === 0) {
+            if (ship[0].x < ship[1].x) {
+              this.field[ship[0].y + 1][ship[0].x] = '1';
+              this.field[ship[0].y][ship[0].x - 1] = '1';
+              this.field[ship[0].y + 1][ship[0].x - 1] = '1';
+              this.field[ship[0].y + 1][ship[ship.length - 1].x] = '1';
+              this.field[ship[0].y][ship[ship.length - 1].x + 1] = '1';
+              this.field[ship[0].y + 1][ship[ship.length - 1].x + 1] = '1';
+
+              for (let i = 1; i < ship.length - 1; i++) {
+                this.field[ship[0].y + 1][ship[i].x] = '1';
+              }
+            } else {
+              this.field[ship[0].y + 1][ship[0].x] = '1';
+              this.field[ship[0].y][ship[0].x + 1] = '1';
+              this.field[ship[0].y + 1][ship[0].x + 1] = '1';
+              this.field[ship[0].y + 1][ship[ship.length - 1].x] = '1';
+              this.field[ship[0].y][ship[ship.length - 1].x - 1] = '1';
+              this.field[ship[0].y + 1][ship[ship.length - 1].x - 1] = '1';
+
+              for (let i = 1; i < ship.length - 1; i++) {
+                this.field[ship[0].y + 1][ship[i].x] = '1';
+              }
+            }
+          } else if (ship[0].y === 9) {
+            if (ship[0].x < ship[1].x) {
+              this.field[ship[0].y - 1][ship[0].x] = '1';
+              this.field[ship[0].y][ship[0].x - 1] = '1';
+              this.field[ship[0].y - 1][ship[0].x - 1] = '1';
+              this.field[ship[0].y - 1][ship[ship.length - 1].x] = '1';
+              this.field[ship[0].y][ship[ship.length - 1].x + 1] = '1';
+              this.field[ship[0].y - 1][ship[ship.length - 1].x + 1] = '1';
+
+              for (let i = 1; i < ship.length - 1; i++) {
+                this.field[ship[0].y - 1][ship[i].x] = '1';
+              }
+            } else {
+              this.field[ship[0].y - 1][ship[0].x] = '1';
+              this.field[ship[0].y][ship[0].x + 1] = '1';
+              this.field[ship[0].y - 1][ship[0].x + 1] = '1';
+              this.field[ship[0].y - 1][ship[ship.length - 1].x] = '1';
+              this.field[ship[0].y][ship[ship.length - 1].x - 1] = '1';
+              this.field[ship[0].y - 1][ship[ship.length - 1].x - 1] = '1';
+
+              for (let i = 1; i < ship.length - 1; i++) {
+                this.field[ship[0].y - 1][ship[i].x] = '1';
+              }
+            }
+          } else if (ship[0].x === 0) {
+            this.field[ship[0].y][ship[ship.length - 1].x + 1] = '1';
+            this.field[ship[0].y - 1][ship[ship.length - 1].x + 1] = '1';
+            this.field[ship[0].y + 1][ship[ship.length - 1].x + 1] = '1';
+
+            for (let i = 0; i < ship.length; i++) {
+              this.field[ship[0].y - 1][ship[i].x] = '1';
+              this.field[ship[0].y + 1][ship[i].x] = '1';
+            }
+          } else if (ship[0].x === 9) {
+            this.field[ship[0].y][ship[ship.length - 1].x - 1] = '1';
+            this.field[ship[0].y - 1][ship[ship.length - 1].x - 1] = '1';
+            this.field[ship[0].y + 1][ship[ship.length - 1].x - 1] = '1';
+
+            for (let i = 0; i < ship.length; i++) {
+              this.field[ship[0].y - 1][ship[i].x] = '1';
+              this.field[ship[0].y + 1][ship[i].x] = '1';
+            }
+          } else {
+            if (ship[0].x < ship[1].x) {
+              this.field[ship[0].y][ship[0].x - 1] = '1';
+              this.field[ship[0].y - 1][ship[0].x - 1] = '1';
+              this.field[ship[0].y + 1][ship[0].x - 1] = '1';
+              this.field[ship[0].y][ship[ship.length - 1].x + 1] = '1';
+              this.field[ship[0].y - 1][ship[ship.length - 1].x + 1] = '1';
+              this.field[ship[0].y + 1][ship[ship.length - 1].x + 1] = '1';
+            } else {
+              this.field[ship[0].y][ship[0].x + 1] = '1';
+              this.field[ship[0].y - 1][ship[0].x + 1] = '1';
+              this.field[ship[0].y + 1][ship[0].x + 1] = '1';
+              this.field[ship[0].y][ship[ship.length - 1].x - 1] = '1';
+              this.field[ship[0].y - 1][ship[ship.length - 1].x - 1] = '1';
+              this.field[ship[0].y + 1][ship[ship.length - 1].x - 1] = '1';
+            }
+
+            for (let i = 0; i < ship.length; i++) {
+              this.field[ship[0].y - 1][ship[i].x] = '1';
+              this.field[ship[0].y + 1][ship[i].x] = '1';
+            }
+          }
         }
 
         if (ship[0].x === ship[1].x) {
+          if (ship[0].x === 0 && ship[0].y === 0) {
 
+          } else if (ship[0].x === 9 && ship[0].y === 0) {
+
+          } else if (ship[0].x === 9 && ship[0].y === 9) {
+
+          } else if (ship[0].x === 0 && ship[0].y === 9) {
+
+          } else if (ship[0].y === 0) {
+
+          } else if (ship[0].y === 9) {
+
+          } else if (ship[0].x === 0) {
+
+          } else if (ship[0].x === 9) {
+
+          } else {
+            
+          }
         }
       } else {
-        this.field[ship[0].y][ship[0].x] = '2';
-
         if (ship[0].y === 0 && ship[0].x === 0) {
           this.field[ship[0].y][ship[0].x + 1] = '1';
           this.field[ship[0].y + 1][ship[0].x] = '1';
@@ -166,7 +313,7 @@ function main() {
   const field = level.createField();
 
   const computer = new Computer(field);
-  const cShip4 = computer.createShip(1);
+  const cShip4 = computer.createShip(4);
   computer.placeShip(cShip4);
 
   console.log(computer.getComputerField());
