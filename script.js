@@ -421,6 +421,53 @@ class Player {
 
     return ship;
   }
+
+  placeShip(ship) {
+    function isIntersect(field, ship) {
+      let flag = true;
+
+      ship.forEach(block => {
+        if (field[block.y][block.x] === '1' || field[block.y][block.x] === '2') {
+          flag = false;
+        }
+      });
+
+      return flag;
+    }
+
+    const controls = {
+      stepLeft: function() {
+        console.log('Step to left!');
+      },
+
+      stepUp: function() {
+        console.log('Step to up!');
+      },
+
+      stepDown: function() {
+        console.log('Step to down!');
+      },
+
+      stepRight: function() {
+        console.log('Step to right!');
+      },
+
+      rotate: function() {
+        console.log('Ship rotated!');
+      },
+
+      setShip: function() {
+        console.log('Ship is seted!');
+      }
+    };
+
+    controls.stepLeft();
+    controls.stepUp();
+    controls.stepDown();
+    controls.stepRight();
+    controls.rotate();
+    controls.setShip();
+  }
 }
 
 function main() {
@@ -444,6 +491,7 @@ function main() {
   const player = new Player(field);
   const pShip4 = player.createShip(4);
   console.log(pShip4);
+  player.placeShip(pShip4);
 
   const root = document.getElementById('root');
   root.innerHTML = level.displayField(field);
