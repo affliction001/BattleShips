@@ -412,8 +412,14 @@ class Player {
     this.fieldMirror = playerField;
   }
 
-  createship(size) {
+  createShip(size) {
+    const ship = [];
 
+    for (let i = 0; i < size; i++) {
+      ship.push({x: i, y: 0});
+    }
+
+    return ship;
   }
 }
 
@@ -434,6 +440,10 @@ function main() {
     console.log(rowStr);
     count++;
   });
+
+  const player = new Player(field);
+  const pShip4 = player.createShip(4);
+  console.log(pShip4);
 
   const root = document.getElementById('root');
   root.innerHTML = level.displayField(field);
