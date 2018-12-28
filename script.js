@@ -407,7 +407,14 @@ class Computer {
 }
 
 class Player {
+  constructor(playerField) {
+    this.field = playerField;
+    this.fieldMirror = playerField;
+  }
 
+  createship(size) {
+
+  }
 }
 
 function main() {
