@@ -366,11 +366,19 @@ class Player {
   }
 
   stepDown(ship) {
-    console.log('Step to down!');
+    if (ship[ship.length - 1].y < this.field.length) {
+      ship.forEach(block => {
+        block.y + 1;
+      });
+    }
   }
 
   stepRight(ship) {
-    console.log('Step to right!');
+    if (ship[ship.length - 1].x < this.field[0].length) {
+      ship.forEach(block => {
+        block.x + 1;
+      });
+    }
   }
 
   rotate(ship) {
@@ -382,16 +390,16 @@ class Player {
         block.y = z;
       });
 
-      if (ship[ship.length - 1].x > 9) {
-        while (ship[ship.length - 1].x > 9) {
+      if (ship[ship.length - 1].x > this.field[0].length - 1) {
+        while (ship[ship.length - 1].x > this.field[0].length - 1) {
           ship.forEach(block => {
             block.x = block.x - 1;
           });
         }
       }
 
-      if (ship[ship.length - 1].y > 9) {
-        while (ship[ship.length - 1].y > 9) {
+      if (ship[ship.length - 1].y > this.field.length - 1) {
+        while (ship[ship.length - 1].y > this.field.length - 1) {
           ship.forEach(block => {
             block.y = block.y - 1;
           });
