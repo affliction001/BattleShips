@@ -2,14 +2,19 @@
 
 function main() {
   const level = new Level(10);
-  const field = level.createField();
+  const computerField = level.createField();
+  const playerField = level.createField();
 
-  const computer = new Computer(field);
+  const computer = new Computer(computerField);
   const cShip4 = computer.createShip(4);
   computer.placeShip(cShip4);
 
+  const player = new Player(playerField);
+  const pShip4 = player.createShip(4);
+  player.placeShip(pShip4);
+
   let count = 1;
-  computer.getComputerField().forEach(row => {
+  player.getPlayerField().forEach(row => {
     let rowStr = count + '.) \t';
     row.forEach(char => {
       rowStr += char + '\t';
@@ -18,11 +23,7 @@ function main() {
     count++;
   });
 
-  const player = new Player(field);
-  const pShip4 = player.createShip(4);
-  player.placeShip(pShip4);
-
   const root = document.getElementById('root');
-  root.innerHTML = level.displayField(field);
+  root.innerHTML = level.displayField(computerField) + '<br/>' + level.displayField(playerField);
 }
 main();

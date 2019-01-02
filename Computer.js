@@ -44,14 +44,10 @@ class Computer {
       return flag;
     }
 
-    function markShipOnField(ship, field) {
-      ship.forEach(block => {
-        field[block.y][block.x] = '2';
-      });
-    }
-
     if (isIntersect(this.field, ship)) {
-      markShipOnField(ship, this.field);
+      ship.forEach(block => {
+        this.field[block.y][block.x] = '2';
+      });
 
       if (ship.length > 1) {
         if (ship[0].y === ship[1].y) {
