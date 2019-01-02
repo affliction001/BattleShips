@@ -17,6 +17,38 @@ function main() {
     showFieldInConsole(player.getPlayerFieldMirror());
   });
 
+  document.getElementById('right').addEventListener('click', event => {
+    player.stepRight(pShip4);
+    player.clearMirror();
+    player.placeShip(pShip4, player.fieldMirror);
+    console.clear();
+    showFieldInConsole(player.getPlayerFieldMirror());
+  });
+
+  document.getElementById('down').addEventListener('click', event => {
+    player.stepDown(pShip4);
+    player.clearMirror();
+    player.placeShip(pShip4, player.fieldMirror);
+    console.clear();
+    showFieldInConsole(player.getPlayerFieldMirror());
+  });
+
+  document.getElementById('left').addEventListener('click', event => {
+    player.stepLeft(pShip4);
+    player.clearMirror();
+    player.placeShip(pShip4, player.fieldMirror);
+    console.clear();
+    showFieldInConsole(player.getPlayerFieldMirror());
+  });
+
+  document.getElementById('up').addEventListener('click', event => {
+    player.stepUp(pShip4);
+    player.clearMirror();
+    player.placeShip(pShip4, player.fieldMirror);
+    console.clear();
+    showFieldInConsole(player.getPlayerFieldMirror());
+  });
+
   const root = document.getElementById('root');
   root.innerHTML = level.displayField('Hi!');
 }
