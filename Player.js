@@ -328,6 +328,6 @@ class Player {
   }
 
   setShip(ship) {
-    console.log('Ship is seted!');
+    return this.placeShip(ship, this.field);
   }
 }

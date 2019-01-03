@@ -21,7 +21,7 @@ td {
   border: 1px solid black;
 }
 
-#rotate, #right, #down, #left, #up {
+#rotate, #right, #down, #left, #up, #set {
   width: 100px;
   height: 100px;
   border: 3px solid black;
@@ -37,3 +37,8 @@ td {
 #down { left: 230px; }
 #right { left: 340px; }
 #rotate { left: 450px; }
+#set { left: 560px; }
+
+#left:active, #up:active, #down:active, #right:active, #rotate:active, #set:active {
+  background-color: #f99;
+}
