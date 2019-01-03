@@ -85,13 +85,14 @@ function moveAndSetPLayerShips(player, ships) {
     if (player.setShip(playerShip)) {
       player.clearMirror();
       console.clear();
-      showFieldInConsole(player.getPlayerField());
-      console.log('');
-      showFieldInConsole(player.getPlayerFieldMirror());
 
       index++;
       if (ships.length > index) {
         playerShip = ships[index];
+        player.placeShip(playerShip, player.fieldMirror);
+        showFieldInConsole(player.getPlayerField());
+        console.log('');
+        showFieldInConsole(player.getPlayerFieldMirror());
       } else {
         index = 0;
       }
